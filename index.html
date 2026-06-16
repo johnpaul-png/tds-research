@@ -25,9 +25,15 @@
 
     #hdr { background: #111; border-bottom: 1px solid #1e1e1e; position: sticky; top: 0; z-index: 100; }
     .hdr-inner { max-width: 1000px; margin: 0 auto; padding: 0 14px; }
-    .hdr-top { display: flex; align-items: center; justify-content: space-between; min-height: 50px; padding: 8px 0; gap: 10px; }
-    .hdr-logo-title { font-size: clamp(13px, 4vw, 18px); font-weight: 700; letter-spacing: clamp(1px, 1vw, 3px); line-height: 1; }
+    .hdr-top { display: flex; align-items: center; justify-content: space-between; min-height: 50px; padding: 8px 0; gap: 10px; flex-wrap: wrap; row-gap: 10px; }
+    .hdr-title-wrap { flex: 1 1 auto; }
+    .hdr-logo-title { font-size: clamp(13px, 4vw, 18px); font-weight: 700; letter-spacing: clamp(1px, 1vw, 3px); line-height: 1.1; white-space: nowrap; }
     .hdr-logo-sub { font-size: clamp(9px, 2.5vw, 11px); letter-spacing: 1px; color: #888; margin-top: 3px; }
+    #admin-bar { flex-wrap: wrap; justify-content: flex-end; }
+    @media (max-width: 700px) {
+      #admin-bar { flex-basis: 100%; justify-content: flex-start; }
+      .btn-admin, .btn-add, .btn-signout, .admin-badge { padding: 6px 11px; letter-spacing: 1px; }
+    }
 
     .nav-bar { display: flex; overflow-x: auto; overflow-y: hidden; border-top: 1px solid #1a1a1a; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
     .nav-bar::-webkit-scrollbar { display: none; }
@@ -59,9 +65,19 @@
     .card-dose-wrap { margin-top: 9px; }
     .card-dose { color: #CCCCCC; font-size: clamp(13px, 3vw, 14px); line-height: 1.6; }
 
-    .delete-btn { display: none; position: absolute; top: 10px; right: 10px; background: none; border: 1px solid #3a0000; border-radius: 4px; color: #C41A1A; font-size: 9px; padding: 2px 7px; letter-spacing: 1px; }
+    .delete-btn { display: none; position: absolute; top: 10px; right: 10px; background: rgba(224,32,32,.14); border: 1px solid #E02020; border-radius: 4px; color: #ff6b6b; font-size: 10px; font-weight: 700; padding: 3px 8px; letter-spacing: 1px; }
+    .delete-btn:active { background: #E02020; color: #fff; }
     body.admin-mode .delete-btn { display: block; }
-    body.admin-mode .card-name { padding-right: 72px; }
+    body.admin-mode .card-name { padding-right: 150px; }
+
+    /* Peptide-card admin actions (Switch to Stack + Delete) */
+    .card-actions { display: none; position: absolute; top: 10px; right: 10px; gap: 6px; z-index: 2; }
+    body.admin-mode .card-actions { display: flex; }
+    .btn-mini { border-radius: 4px; font-size: 10px; font-weight: 700; padding: 3px 8px; letter-spacing: 1px; border: 1px solid; background: none; white-space: nowrap; }
+    .btn-switch { border-color: #2a5a2a; color: #5cca5c; background: rgba(60,200,90,.12); }
+    .btn-switch:active { background: #2a8a2a; color: #fff; }
+    .btn-del2 { border-color: #E02020; color: #ff6b6b; background: rgba(224,32,32,.14); }
+    .btn-del2:active { background: #E02020; color: #fff; }
 
     .admin-badge { background: #1a3a1a; border: 1px solid #2a5a2a; border-radius: 4px; padding: 5px 10px; font-size: clamp(10px, 2.5vw, 12px); color: #5cca5c; letter-spacing: 1px; white-space: nowrap; }
     .btn-add { background: #E02020; border: none; border-radius: 4px; color: #fff; font-size: clamp(10px, 2.5vw, 12px); padding: 6px 14px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
@@ -87,6 +103,35 @@
     .pass-input-error { border-color: #E02020 !important; }
     .footer { text-align: center; color: #2a2a2a; font-size: clamp(7px, 1.8vw, 8px); letter-spacing: 2px; margin-top: 32px; padding-bottom: 20px; }
 
+    /* ── STACKS ── */
+    .stack-card { background: #1C1C1C; border: 1px solid #2A2A2A; border-radius: 8px; padding: 16px; position: relative; display: flex; flex-direction: column; }
+    .stack-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .stack-name { color: #E02020; font-weight: 700; font-size: clamp(15px, 3.5vw, 18px); line-height: 1.3; flex: 1; }
+    .level-badge { font-size: clamp(8px, 2.2vw, 10px); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 0 10px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; height: 26px; display: inline-flex; align-items: center; }
+    .level-beginner { background: #12331a; border: 1px solid #2a5a2a; color: #5cca5c; }
+    .level-intermediate { background: #33280f; border: 1px solid #6a541f; color: #e0a020; }
+    .level-advanced { background: #3a0000; border: 1px solid #6a1f1f; color: #ff5050; }
+    .stack-desc { color: #CCCCCC; font-size: clamp(13px, 3vw, 14px); line-height: 1.6; margin-bottom: 12px; }
+    .stack-block { border-top: 1px solid #3A0000; padding-top: 10px; margin-top: 8px; }
+    .stack-label { color: #C41A1A; font-size: clamp(9px, 2.5vw, 10px); font-weight: 700; letter-spacing: 1.5px; margin-bottom: 5px; text-transform: uppercase; }
+    .stack-value { color: #F0F0F0; font-size: clamp(13px, 3vw, 14px); line-height: 1.6; }
+    .stack-value.muted { color: #CCCCCC; }
+    .stack-peptides { list-style: none; padding: 0; margin: 0; }
+    .stack-peptides li { color: #F0F0F0; font-size: clamp(13px, 3vw, 14px); line-height: 1.7; padding-left: 14px; position: relative; }
+    .stack-peptides li::before { content: ''; position: absolute; left: 0; top: 10px; width: 5px; height: 5px; background: #E02020; border-radius: 50%; }
+    .stack-foot { margin-top: auto; border-top: 1px solid #3A0000; padding-top: 11px; }
+    .stack-cycle { color: #F0F0F0; font-size: clamp(14px, 3.2vw, 16px); font-weight: 700; line-height: 1.45; }
+    body.admin-mode .stack-top { padding-right: 96px; min-height: 26px; }
+    body.admin-mode .stack-card .delete-btn { top: 16px; right: 16px; height: 26px; display: inline-flex; align-items: center; }
+
+    /* Chip-style included-peptides input */
+    .chip-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 7px; background: #242424; border: 1px solid #383838; border-radius: 4px; color: #F0F0F0; font-size: 13px; padding: 5px 9px; }
+    .chip button { background: none; border: none; color: #888; font-size: 14px; line-height: 1; padding: 0; }
+    .chip button:active { color: #E02020; }
+    .chip-empty { color: #555; font-size: 12px; letter-spacing: 1px; margin-top: 8px; }
+    .btn-chip-add { flex: 0 0 auto; background: #E02020; border: none; border-radius: 4px; color: #fff; font-size: 13px; font-weight: 700; padding: 0 16px; letter-spacing: 1px; }
+
     /* Loading spinner */
     #loading { display: flex; align-items: center; justify-content: center; height: 200px; color: #444; font-size: 13px; letter-spacing: 2px; }
     .spinner { width: 20px; height: 20px; border: 2px solid #333; border-top-color: #E02020; border-radius: 50%; animation: spin .8s linear infinite; margin-right: 12px; }
@@ -100,7 +145,7 @@
 <div id="hdr">
   <div class="hdr-inner">
     <div class="hdr-top">
-      <div style="flex:1;min-width:0">
+      <div class="hdr-title-wrap">
         <div class="hdr-logo-title">TDS PEPTIDE RESEARCH</div>
         <div class="hdr-logo-sub">FOR RESEARCH PURPOSES ONLY · NOT FOR HUMAN CONSUMPTION</div>
       </div>
@@ -166,7 +211,54 @@
   </div>
 </div>
 
-<!-- Firebase loaded in <head> -->
+<!-- Add Stack Modal -->
+<div class="overlay" id="add-stack-modal" style="display:none" onclick="if(event.target===this)closeAddStackModal()">
+  <div class="modal modal-add">
+    <div class="modal-title">ADD NEW STACK</div>
+    <div class="modal-sub">Build a peptide stack — admin only</div>
+    <div class="field-wrap">
+      <div class="field-label">LEVEL <span style="color:#555">(OPTIONAL)</span></div>
+      <select class="field-select" id="sf-level">
+        <option value="">— None —</option>
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+      </select>
+    </div>
+    <div class="field-wrap">
+      <div class="field-label">NAME <span style="color:#555">(REQUIRED)</span></div>
+      <input class="field-input" id="sf-name" type="text" placeholder="e.g. Recovery & Healing Stack">
+    </div>
+    <div class="field-wrap">
+      <div class="field-label">DESCRIPTION <span style="color:#555">(REQUIRED)</span></div>
+      <textarea class="field-textarea" id="sf-desc" placeholder="What this stack is for..." rows="3"></textarea>
+    </div>
+    <div class="field-wrap">
+      <div class="field-label">INCLUDED PEPTIDES</div>
+      <div style="display:flex;gap:8px">
+        <input class="field-input" id="sf-pep-input" type="text" placeholder="e.g. BPC-157 5mg" onkeydown="if(event.key==='Enter'){event.preventDefault();addPepChip();}">
+        <button type="button" class="btn-chip-add" onclick="addPepChip()">ADD</button>
+      </div>
+      <div id="sf-pep-list" class="chip-list"></div>
+    </div>
+    <div class="field-wrap">
+      <div class="field-label">RECONSTITUTION</div>
+      <textarea class="field-textarea" id="sf-recon" placeholder="Reconstitution instructions..." rows="2"></textarea>
+    </div>
+    <div class="field-wrap">
+      <div class="field-label">PROTOCOL / DOSING</div>
+      <textarea class="field-textarea" id="sf-protocol" placeholder="Combined dosing / timing..." rows="2"></textarea>
+    </div>
+    <div class="field-wrap" style="margin-bottom:22px">
+      <div class="field-label">CYCLE / DURATION <span style="color:#555">(OPTIONAL)</span></div>
+      <input class="field-input" id="sf-duration" type="text" placeholder="e.g. 8-12 weeks">
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-primary" onclick="submitAddStack()">ADD STACK</button>
+      <button class="btn-secondary" onclick="closeAddStackModal()">CANCEL</button>
+    </div>
+  </div>
+</div>
 
 <script>
 // ── Firebase config ──────────────────────────────────────────────────────────
@@ -185,6 +277,10 @@ const db = firebase.database();
 // ── Admin password ───────────────────────────────────────────────────────────
 const PASS = "TDS2026";
 let isAdmin = false;
+
+// ── localStorage cache (instant offline loads) ───────────────────────────────
+const LS_KEY = 'tds_catalog_v1';
+function cacheCatalog(){ try { localStorage.setItem(LS_KEY, JSON.stringify({ sections, stacks })); } catch(e){} }
 
 // ── Default seed data ────────────────────────────────────────────────────────
 const DEFAULT_SECTIONS = [
@@ -264,9 +360,39 @@ const DEFAULT_SECTIONS = [
   ]},
 ];
 
+// ── Default stacks (seeded once if /stacks is empty) ─────────────────────────
+const DEFAULT_STACKS = [
+  {id:"st1", ts:1, name:"Recovery & Healing Stack", level:"beginner",
+    desc:"Entry-level healing protocol pairing the two most-used recovery peptides to repair tendons, ligaments, muscle, and gut tissue.",
+    peptides:["BPC-157 5mg","TB-500 5mg"],
+    recon:"Reconstitute each vial separately with 2ml of bacteriostatic or sterile water.",
+    protocol:"BPC-157: 10 units daily = 250mcg. TB-500: 10-15 units daily = 250-375mcg. Inject in the morning.",
+    duration:"4-6 weeks"},
+  {id:"st2", ts:2, name:"Lean Recomp Stack", level:"intermediate",
+    desc:"Metabolic recomposition stack combining a triple-receptor agonist with mitochondrial and visceral-fat support for steady fat loss.",
+    peptides:["Retatrutide 10mg","MOTS-C 10mg","Tesamorelin 5mg"],
+    recon:"Retatrutide: 2ml sterile water. MOTS-C: 3ml BAC or sterile water. Tesamorelin: 1ml sterile water ONLY.",
+    protocol:"Retatrutide: 5-10 units twice weekly = 250-500mcg. MOTS-C: 10 units daily = 333mcg. Tesamorelin: 10 units nightly = 500mcg.",
+    duration:"8-12 weeks"},
+  {id:"st3", ts:3, name:"Longevity & Anti-Aging Stack", level:"advanced",
+    desc:"Comprehensive longevity protocol targeting GH optimization, cellular energy, telomere support, and collagen regeneration.",
+    peptides:["CJC-1295 + Ipamorelin 10mg","NAD+ 500mg","Epithalon","GHK-Cu 50mg"],
+    recon:"Follow each vial's individual reconstitution protocol from the catalog below.",
+    protocol:"CJC/Ipamorelin: 10-15 units nightly = 250-375mcg each. NAD+: 15 units daily = 25mg. Epithalon: 7.5-10 units nightly = 250-333mcg. GHK-Cu: 10 units before bed.",
+    duration:"10-12 weeks (run Epithalon as a 20-day cycle)"},
+];
+
+const LEVELS = [
+  {id:"beginner", label:"Beginner"},
+  {id:"intermediate", label:"Intermediate"},
+  {id:"advanced", label:"Advanced"},
+];
+
 // ── State ────────────────────────────────────────────────────────────────────
 let sections = [];
+let stacks = [];
 let seeded = false;
+let seededStacks = false;
 
 function sortSections(arr) {
   return arr.sort((a, b) => {
@@ -283,6 +409,13 @@ function parseSections(data) {
   })));
 }
 
+function parseStacks(data) {
+  return Object.values(data).map(st => ({
+    ...st,
+    peptides: st.peptides ? Object.values(st.peptides) : []
+  })).sort((a, b) => (a.ts || 0) - (b.ts || 0));
+}
+
 function seedDatabase() {
   const seedData = {};
   DEFAULT_SECTIONS.forEach(s => {
@@ -293,10 +426,15 @@ function seedDatabase() {
   return db.ref('sections').set(seedData);
 }
 
-// ── Single real-time listener ─────────────────────────────────────────────────
+function seedStacks() {
+  const seed = {};
+  DEFAULT_STACKS.forEach(st => { seed[st.id] = st; });
+  return db.ref('stacks').set(seed);
+}
+
+// ── Real-time listeners ───────────────────────────────────────────────────────
 db.ref('sections').on('value', snapshot => {
   if (!snapshot.exists()) {
-    // Database empty — seed it
     if (!seeded) {
       seeded = true;
       sections = JSON.parse(JSON.stringify(DEFAULT_SECTIONS));
@@ -306,12 +444,27 @@ db.ref('sections').on('value', snapshot => {
     return;
   }
   sections = parseSections(snapshot.val());
-  render();
+  cacheCatalog(); render();
 }, error => {
-  console.error('Firebase error:', error);
-  // Fallback to default data if Firebase fails
-  sections = JSON.parse(JSON.stringify(DEFAULT_SECTIONS));
-  render();
+  console.error('Firebase sections error:', error);
+  if (!sections.length) { sections = JSON.parse(JSON.stringify(DEFAULT_SECTIONS)); render(); }
+});
+
+db.ref('stacks').on('value', snapshot => {
+  if (!snapshot.exists()) {
+    if (!seededStacks) {
+      seededStacks = true;
+      stacks = JSON.parse(JSON.stringify(DEFAULT_STACKS));
+      render();
+      seedStacks().catch(e => console.error('Seed stacks error:', e));
+    }
+    return;
+  }
+  stacks = parseStacks(snapshot.val());
+  cacheCatalog(); render();
+}, error => {
+  console.error('Firebase stacks error:', error);
+  if (!stacks.length) { stacks = JSON.parse(JSON.stringify(DEFAULT_STACKS)); render(); }
 });
 
 // ── Render ───────────────────────────────────────────────────────────────────
@@ -333,7 +486,8 @@ function render() {
 }
 
 function renderNav() {
-  document.getElementById('nav-bar').innerHTML = sections.map(s =>
+  const stacksBtn = `<button class="nav-btn" onclick="jumpTo('sec-stacks')">STACKS</button>`;
+  document.getElementById('nav-bar').innerHTML = stacksBtn + sections.map(s =>
     `<button class="nav-btn" onclick="jumpTo('sec-${s.id}')">${s.title}</button>`
   ).join('');
 }
@@ -341,13 +495,65 @@ function renderNav() {
 function renderAdminBar() {
   document.getElementById('admin-bar').innerHTML = isAdmin
     ? `<div class="admin-badge">ADMIN ON</div>
+       <button class="btn-add" onclick="openAddStackModal()">+ ADD STACK</button>
        <button class="btn-add" onclick="openAddModal()">+ ADD PEPTIDE</button>
        <button class="btn-signout" onclick="signOut()">SIGN OUT</button>`
     : `<button class="btn-admin" onclick="openPassModal()">ADMIN</button>`;
 }
 
+function renderStacksSection() {
+  const cards = stacks.length
+    ? stacks.map(st => {
+        const lvl = (st.level || '').toLowerCase();
+        const lvlMatch = LEVELS.find(l => l.id === lvl);
+        const badge = lvlMatch ? `<span class="level-badge level-${lvl}">${lvlMatch.label}</span>` : '';
+        const pepList = (st.peptides && st.peptides.length)
+          ? `<ul class="stack-peptides">${st.peptides.map(p => `<li>${p}</li>`).join('')}</ul>`
+          : '<div class="stack-value muted">—</div>';
+        return `
+          <div class="stack-card card">
+            <button class="delete-btn" onclick="deleteStack('${st.id}')">✕ DELETE</button>
+            <div class="stack-top">
+              <div class="stack-name">${st.name}</div>
+              ${badge}
+            </div>
+            ${st.desc ? `<div class="stack-desc">${st.desc}</div>` : ''}
+            <div class="stack-block">
+              <div class="stack-label">Included Peptides</div>
+              ${pepList}
+            </div>
+            ${st.recon ? `<div class="stack-block">
+              <div class="stack-label">Reconstitution</div>
+              <div class="stack-value">${st.recon}</div>
+            </div>` : ''}
+            ${st.protocol ? `<div class="stack-block">
+              <div class="stack-label">Protocol / Dosing</div>
+              <div class="stack-value muted">${st.protocol}</div>
+            </div>` : ''}
+            ${st.duration ? `<div class="stack-foot">
+              <div class="stack-label">Cycle</div>
+              <div class="stack-cycle">${st.duration}</div>
+            </div>` : ''}
+          </div>`;
+      }).join('')
+    : `<div style="color:#555;font-size:14px;letter-spacing:1px;padding:8px 0">No stacks yet. Sign in as admin to add one.</div>`;
+
+  return `
+    <div class="section" id="sec-stacks">
+      <div class="section-hdr">
+        <div class="section-bar"></div>
+        <div style="flex:1">
+          <div class="section-title">STACKS</div>
+          <div class="section-line"></div>
+        </div>
+      </div>
+      <div class="cards-grid">${cards}</div>
+    </div>`;
+}
+
 function renderContent() {
   document.getElementById('content').innerHTML =
+    renderStacksSection() +
     sections.map(s => `
       <div class="section" id="sec-${s.id}">
         <div class="section-hdr">
@@ -360,7 +566,10 @@ function renderContent() {
         <div class="cards-grid">
           ${s.peptides.map(p => `
             <div class="card">
-              <button class="delete-btn" onclick="deleteCard('${s.id}','${p.id}')">✕ DELETE</button>
+              <div class="card-actions">
+                <button class="btn-mini btn-switch" onclick="switchToStack('${s.id}','${p.id}')">→ STACK</button>
+                <button class="btn-mini btn-del2" onclick="deleteCard('${s.id}','${p.id}')">✕ DELETE</button>
+              </div>
               <div class="card-name">${p.name}</div>
               <div class="card-desc">${p.desc}</div>
               <div class="card-divider">
@@ -427,7 +636,7 @@ function submitPass() {
 }
 function signOut() { isAdmin = false; render(); }
 
-// ── Add peptide ───────────────────────────────────────────────────────────────
+// ── Add / delete peptide (writes directly to Firebase) ───────────────────────
 function openAddModal() {
   document.getElementById('af-sec').innerHTML = sections.map(s =>
     `<option value="${s.id}">${s.title}</option>`).join('');
@@ -444,18 +653,103 @@ function submitAdd() {
   const dose  = document.getElementById('af-dose').value.trim();
   if (!name) { alert('Please enter a peptide name.'); return; }
   const newId = 'p-' + Date.now();
-  // Write directly to Firebase
   db.ref(`sections/${sid}/peptides/${newId}`).set({ id: newId, name, desc, recon, dose })
     .then(() => { closeAddModal(); })
     .catch(err => alert('Error saving: ' + err.message));
 }
-
-// ── Delete peptide ────────────────────────────────────────────────────────────
 function deleteCard(sid, pid) {
   if (!confirm('Delete this peptide?')) return;
   db.ref(`sections/${sid}/peptides/${pid}`).remove()
     .catch(err => alert('Error deleting: ' + err.message));
 }
+
+// ── Stacks admin (writes directly to Firebase, same pattern as peptides) ─────
+let stackPepDraft = [];
+
+function renderPepChips() {
+  const list = document.getElementById('sf-pep-list');
+  if (!stackPepDraft.length) {
+    list.innerHTML = '<div class="chip-empty">No peptides added yet.</div>';
+    return;
+  }
+  list.innerHTML = stackPepDraft.map((p, i) =>
+    `<span class="chip">${p}<button type="button" onclick="removePepChip(${i})" aria-label="Remove">✕</button></span>`
+  ).join('');
+}
+function addPepChip() {
+  const input = document.getElementById('sf-pep-input');
+  const val = input.value.trim();
+  if (!val) return;
+  stackPepDraft.push(val);
+  input.value = '';
+  input.focus();
+  renderPepChips();
+}
+function removePepChip(i) { stackPepDraft.splice(i, 1); renderPepChips(); }
+
+function openAddStackModal(prefill) {
+  prefill = prefill || {};
+  document.getElementById('sf-level').value    = prefill.level    || '';
+  document.getElementById('sf-name').value     = prefill.name     || '';
+  document.getElementById('sf-desc').value     = prefill.desc     || '';
+  document.getElementById('sf-recon').value    = prefill.recon    || '';
+  document.getElementById('sf-protocol').value = prefill.protocol || '';
+  document.getElementById('sf-duration').value = prefill.duration || '';
+  document.getElementById('sf-pep-input').value = '';
+  stackPepDraft = Array.isArray(prefill.peptides) ? prefill.peptides.slice() : [];
+  renderPepChips();
+  document.getElementById('add-stack-modal').style.display = 'flex';
+  setTimeout(() => document.getElementById('sf-name').focus(), 100);
+}
+function closeAddStackModal() { document.getElementById('add-stack-modal').style.display = 'none'; }
+function submitAddStack() {
+  const name = document.getElementById('sf-name').value.trim();
+  const desc = document.getElementById('sf-desc').value.trim();
+  if (!name) { alert('Please enter a stack name.'); return; }
+  if (!desc) { alert('Please enter a description.'); return; }
+  const id = 'st-' + Date.now();
+  const obj = {
+    id, ts: Date.now(), name,
+    level: document.getElementById('sf-level').value,
+    desc,
+    peptides: stackPepDraft.slice(),
+    recon: document.getElementById('sf-recon').value.trim(),
+    protocol: document.getElementById('sf-protocol').value.trim(),
+    duration: document.getElementById('sf-duration').value.trim(),
+  };
+  db.ref('stacks/' + id).set(obj)
+    .then(() => { closeAddStackModal(); })
+    .catch(err => alert('Error saving: ' + err.message));
+}
+// Open the Add Stack form pre-filled from an existing peptide. The peptide
+// stays in its category; saving creates a new stack under STACKS.
+function switchToStack(sid, pid) {
+  const sec = sections.find(s => s.id === sid);
+  if (!sec) return;
+  const p = (sec.peptides || []).find(x => x.id === pid);
+  if (!p) return;
+  openAddStackModal({
+    name: '', desc: p.desc, recon: p.recon,
+    protocol: p.dose, level: '', duration: '', peptides: [p.name]
+  });
+}
+function deleteStack(id) {
+  if (!confirm('Delete this stack?')) return;
+  db.ref('stacks/' + id).remove()
+    .catch(err => alert('Error deleting: ' + err.message));
+}
+
+// ── Instant render from localStorage cache while Firebase loads ──────────────
+(function loadCacheAndRender(){
+  try {
+    const c = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+    if (c) {
+      if (Array.isArray(c.sections) && c.sections.length) sections = c.sections;
+      if (Array.isArray(c.stacks)) stacks = c.stacks;
+      if (sections.length) render();
+    }
+  } catch(e){}
+})();
 </script>
 </body>
 </html>
