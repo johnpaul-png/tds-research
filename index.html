@@ -52,11 +52,11 @@
     .section-title { font-size: clamp(13px, 3.5vw, 16px); font-weight: 700; letter-spacing: clamp(1px, 0.8vw, 3px); }
     .section-line { height: 1px; background: linear-gradient(to right, #E02020, transparent); margin-top: 7px; }
 
-    .cards-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-    @media (min-width: 560px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 900px) { .cards-grid { grid-template-columns: repeat(3, 1fr); } }
+    .cards-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+    @media (min-width: 560px) { .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 900px) { .cards-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
-    .card { background: #1C1C1C; border: 1px solid #2A2A2A; border-radius: 8px; padding: 14px; position: relative; }
+    .card { background: #1C1C1C; border: 1px solid #2A2A2A; border-radius: 8px; padding: 14px; position: relative; overflow-wrap: break-word; }
     .card-name { color: #E02020; font-weight: 700; font-size: clamp(15px, 3.5vw, 17px); margin-bottom: 6px; line-height: 1.3; }
     .card-desc { color: #CCCCCC; font-size: clamp(13px, 3vw, 14px); line-height: 1.6; margin-bottom: 12px; }
     .card-divider { border-top: 1px solid #3A0000; padding-top: 10px; margin-bottom: 8px; }
@@ -68,12 +68,13 @@
     .delete-btn { display: none; position: absolute; top: 10px; right: 10px; background: rgba(224,32,32,.14); border: 1px solid #E02020; border-radius: 4px; color: #ff6b6b; font-size: 10px; font-weight: 700; padding: 3px 8px; letter-spacing: 1px; }
     .delete-btn:active { background: #E02020; color: #fff; }
     body.admin-mode .delete-btn { display: block; }
-    body.admin-mode .card-name { padding-right: 150px; }
 
-    /* Peptide-card admin actions (Switch to Stack + Delete) */
-    .card-actions { display: none; position: absolute; top: 10px; right: 10px; gap: 6px; z-index: 2; }
-    body.admin-mode .card-actions { display: flex; }
-    .btn-mini { border-radius: 4px; font-size: 10px; font-weight: 700; padding: 3px 8px; letter-spacing: 1px; border: 1px solid; background: none; white-space: nowrap; }
+    /* Peptide-card admin action bar (Edit / Switch to Stack / Delete) */
+    .card-admin-bar { display: none; gap: 6px; flex-wrap: wrap; margin-top: 12px; padding-top: 10px; border-top: 1px solid #2A2A2A; }
+    body.admin-mode .card-admin-bar { display: flex; }
+    .btn-mini { border-radius: 4px; font-size: 10px; font-weight: 700; padding: 4px 9px; letter-spacing: 1px; border: 1px solid; background: none; white-space: nowrap; }
+    .btn-edit { border-color: #3a5a8a; color: #7fb0ff; background: rgba(55,138,221,.14); }
+    .btn-edit:active { background: #2f6fc0; color: #fff; }
     .btn-switch { border-color: #2a5a2a; color: #5cca5c; background: rgba(60,200,90,.12); }
     .btn-switch:active { background: #2a8a2a; color: #fff; }
     .btn-del2 { border-color: #E02020; color: #ff6b6b; background: rgba(224,32,32,.14); }
@@ -121,8 +122,6 @@
     .stack-peptides li::before { content: ''; position: absolute; left: 0; top: 10px; width: 5px; height: 5px; background: #E02020; border-radius: 50%; }
     .stack-foot { margin-top: auto; border-top: 1px solid #3A0000; padding-top: 11px; }
     .stack-cycle { color: #F0F0F0; font-size: clamp(14px, 3.2vw, 16px); font-weight: 700; line-height: 1.45; }
-    body.admin-mode .stack-top { padding-right: 96px; min-height: 26px; }
-    body.admin-mode .stack-card .delete-btn { top: 16px; right: 16px; height: 26px; display: inline-flex; align-items: center; }
 
     /* Chip-style included-peptides input */
     .chip-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
@@ -182,7 +181,7 @@
 <!-- Add Peptide Modal -->
 <div class="overlay" id="add-modal" style="display:none" onclick="if(event.target===this)closeAddModal()">
   <div class="modal modal-add">
-    <div class="modal-title">ADD NEW PEPTIDE</div>
+    <div class="modal-title" id="add-modal-title">ADD NEW PEPTIDE</div>
     <div class="modal-sub">Fill in all fields below</div>
     <div class="field-wrap">
       <div class="field-label">SECTION</div>
@@ -205,7 +204,7 @@
       <textarea class="field-textarea" id="af-dose" placeholder="Dosing instructions..." rows="2"></textarea>
     </div>
     <div style="display:flex;gap:8px">
-      <button class="btn-primary" onclick="submitAdd()">ADD PEPTIDE</button>
+      <button class="btn-primary" id="add-modal-btn" onclick="submitAdd()">ADD PEPTIDE</button>
       <button class="btn-secondary" onclick="closeAddModal()">CANCEL</button>
     </div>
   </div>
@@ -214,7 +213,7 @@
 <!-- Add Stack Modal -->
 <div class="overlay" id="add-stack-modal" style="display:none" onclick="if(event.target===this)closeAddStackModal()">
   <div class="modal modal-add">
-    <div class="modal-title">ADD NEW STACK</div>
+    <div class="modal-title" id="add-stack-title">ADD NEW STACK</div>
     <div class="modal-sub">Build a peptide stack — admin only</div>
     <div class="field-wrap">
       <div class="field-label">LEVEL <span style="color:#555">(OPTIONAL)</span></div>
@@ -254,7 +253,7 @@
       <input class="field-input" id="sf-duration" type="text" placeholder="e.g. 8-12 weeks">
     </div>
     <div style="display:flex;gap:8px">
-      <button class="btn-primary" onclick="submitAddStack()">ADD STACK</button>
+      <button class="btn-primary" id="add-stack-btn" onclick="submitAddStack()">ADD STACK</button>
       <button class="btn-secondary" onclick="closeAddStackModal()">CANCEL</button>
     </div>
   </div>
@@ -512,7 +511,6 @@ function renderStacksSection() {
           : '<div class="stack-value muted">—</div>';
         return `
           <div class="stack-card card">
-            <button class="delete-btn" onclick="deleteStack('${st.id}')">✕ DELETE</button>
             <div class="stack-top">
               <div class="stack-name">${st.name}</div>
               ${badge}
@@ -534,6 +532,10 @@ function renderStacksSection() {
               <div class="stack-label">Cycle</div>
               <div class="stack-cycle">${st.duration}</div>
             </div>` : ''}
+            <div class="card-admin-bar">
+              <button class="btn-mini btn-edit" onclick="editStack('${st.id}')">✎ EDIT</button>
+              <button class="btn-mini btn-del2" onclick="deleteStack('${st.id}')">✕ DELETE</button>
+            </div>
           </div>`;
       }).join('')
     : `<div style="color:#555;font-size:14px;letter-spacing:1px;padding:8px 0">No stacks yet. Sign in as admin to add one.</div>`;
@@ -566,10 +568,6 @@ function renderContent() {
         <div class="cards-grid">
           ${s.peptides.map(p => `
             <div class="card">
-              <div class="card-actions">
-                <button class="btn-mini btn-switch" onclick="switchToStack('${s.id}','${p.id}')">→ STACK</button>
-                <button class="btn-mini btn-del2" onclick="deleteCard('${s.id}','${p.id}')">✕ DELETE</button>
-              </div>
               <div class="card-name">${p.name}</div>
               <div class="card-desc">${p.desc}</div>
               <div class="card-divider">
@@ -579,6 +577,11 @@ function renderContent() {
               <div class="card-dose-wrap">
                 <div class="card-label">DOSING</div>
                 <div class="card-dose">${p.dose}</div>
+              </div>
+              <div class="card-admin-bar">
+                <button class="btn-mini btn-edit" onclick="editPeptide('${s.id}','${p.id}')">✎ EDIT</button>
+                <button class="btn-mini btn-switch" onclick="switchToStack('${s.id}','${p.id}')">→ STACK</button>
+                <button class="btn-mini btn-del2" onclick="deleteCard('${s.id}','${p.id}')">✕ DELETE</button>
               </div>
             </div>`).join('')}
         </div>
@@ -636,15 +639,36 @@ function submitPass() {
 }
 function signOut() { isAdmin = false; render(); }
 
-// ── Add / delete peptide (writes directly to Firebase) ───────────────────────
+// ── Add / edit / delete peptide (writes directly to Firebase) ────────────────
+let editingPeptide = null;
+
 function openAddModal() {
+  editingPeptide = null;
+  document.getElementById('add-modal-title').textContent = 'ADD NEW PEPTIDE';
+  document.getElementById('add-modal-btn').textContent = 'ADD PEPTIDE';
   document.getElementById('af-sec').innerHTML = sections.map(s =>
     `<option value="${s.id}">${s.title}</option>`).join('');
   ['af-name','af-desc','af-recon','af-dose'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('add-modal').style.display = 'flex';
   setTimeout(() => document.getElementById('af-name').focus(), 100);
 }
-function closeAddModal() { document.getElementById('add-modal').style.display = 'none'; }
+function editPeptide(sid, pid) {
+  const sec = sections.find(s => s.id === sid); if (!sec) return;
+  const p = (sec.peptides || []).find(x => x.id === pid); if (!p) return;
+  editingPeptide = { sid, pid };
+  document.getElementById('add-modal-title').textContent = 'EDIT PEPTIDE';
+  document.getElementById('add-modal-btn').textContent = 'SAVE CHANGES';
+  document.getElementById('af-sec').innerHTML = sections.map(s =>
+    `<option value="${s.id}">${s.title}</option>`).join('');
+  document.getElementById('af-sec').value = sid;
+  document.getElementById('af-name').value  = p.name  || '';
+  document.getElementById('af-desc').value  = p.desc  || '';
+  document.getElementById('af-recon').value = p.recon || '';
+  document.getElementById('af-dose').value  = p.dose  || '';
+  document.getElementById('add-modal').style.display = 'flex';
+  setTimeout(() => document.getElementById('af-name').focus(), 100);
+}
+function closeAddModal() { editingPeptide = null; document.getElementById('add-modal').style.display = 'none'; }
 function submitAdd() {
   const sid   = document.getElementById('af-sec').value;
   const name  = document.getElementById('af-name').value.trim();
@@ -652,6 +676,24 @@ function submitAdd() {
   const recon = document.getElementById('af-recon').value.trim();
   const dose  = document.getElementById('af-dose').value.trim();
   if (!name) { alert('Please enter a peptide name.'); return; }
+
+  if (editingPeptide) {
+    const oldSid = editingPeptide.sid, pid = editingPeptide.pid;
+    const obj = { id: pid, name, desc, recon, dose };
+    if (sid === oldSid) {
+      db.ref(`sections/${sid}/peptides/${pid}`).set(obj)
+        .then(() => { closeAddModal(); })
+        .catch(err => alert('Error saving: ' + err.message));
+    } else {
+      // moved to a different category
+      db.ref(`sections/${sid}/peptides/${pid}`).set(obj)
+        .then(() => db.ref(`sections/${oldSid}/peptides/${pid}`).remove())
+        .then(() => { closeAddModal(); })
+        .catch(err => alert('Error saving: ' + err.message));
+    }
+    return;
+  }
+
   const newId = 'p-' + Date.now();
   db.ref(`sections/${sid}/peptides/${newId}`).set({ id: newId, name, desc, recon, dose })
     .then(() => { closeAddModal(); })
@@ -687,29 +729,46 @@ function addPepChip() {
 }
 function removePepChip(i) { stackPepDraft.splice(i, 1); renderPepChips(); }
 
-function openAddStackModal(prefill) {
-  prefill = prefill || {};
-  document.getElementById('sf-level').value    = prefill.level    || '';
-  document.getElementById('sf-name').value     = prefill.name     || '';
-  document.getElementById('sf-desc').value     = prefill.desc     || '';
-  document.getElementById('sf-recon').value    = prefill.recon    || '';
-  document.getElementById('sf-protocol').value = prefill.protocol || '';
-  document.getElementById('sf-duration').value = prefill.duration || '';
+let editingStack = null;
+
+function fillStackForm(d) {
+  d = d || {};
+  document.getElementById('sf-level').value    = d.level    || '';
+  document.getElementById('sf-name').value     = d.name     || '';
+  document.getElementById('sf-desc').value     = d.desc     || '';
+  document.getElementById('sf-recon').value    = d.recon    || '';
+  document.getElementById('sf-protocol').value = d.protocol || '';
+  document.getElementById('sf-duration').value = d.duration || '';
   document.getElementById('sf-pep-input').value = '';
-  stackPepDraft = Array.isArray(prefill.peptides) ? prefill.peptides.slice() : [];
+  stackPepDraft = Array.isArray(d.peptides) ? d.peptides.slice() : [];
   renderPepChips();
   document.getElementById('add-stack-modal').style.display = 'flex';
   setTimeout(() => document.getElementById('sf-name').focus(), 100);
 }
-function closeAddStackModal() { document.getElementById('add-stack-modal').style.display = 'none'; }
+
+function openAddStackModal(prefill) {
+  editingStack = null;
+  document.getElementById('add-stack-title').textContent = 'ADD NEW STACK';
+  document.getElementById('add-stack-btn').textContent = 'ADD STACK';
+  fillStackForm(prefill);
+}
+function editStack(id) {
+  const st = stacks.find(s => s.id === id); if (!st) return;
+  editingStack = { id: st.id, ts: st.ts || Date.now() };
+  document.getElementById('add-stack-title').textContent = 'EDIT STACK';
+  document.getElementById('add-stack-btn').textContent = 'SAVE CHANGES';
+  fillStackForm(st);
+}
+function closeAddStackModal() { editingStack = null; document.getElementById('add-stack-modal').style.display = 'none'; }
 function submitAddStack() {
   const name = document.getElementById('sf-name').value.trim();
   const desc = document.getElementById('sf-desc').value.trim();
   if (!name) { alert('Please enter a stack name.'); return; }
   if (!desc) { alert('Please enter a description.'); return; }
-  const id = 'st-' + Date.now();
+  const id = editingStack ? editingStack.id : 'st-' + Date.now();
+  const ts = editingStack ? editingStack.ts : Date.now();
   const obj = {
-    id, ts: Date.now(), name,
+    id, ts, name,
     level: document.getElementById('sf-level').value,
     desc,
     peptides: stackPepDraft.slice(),
