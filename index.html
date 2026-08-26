@@ -298,6 +298,13 @@ function cacheCatalog(){ try{ localStorage.setItem(LS, JSON.stringify({sections:
 var _renderT=null; function scheduleRender(){ if(_renderT)clearTimeout(_renderT); _renderT=setTimeout(function(){ _renderT=null; render(); }, 60); }
 function saveSections(){ cacheCatalog(); return db.ref('sections').set(sections).catch(function(e){ alert('Could not save to the database: '+e.message); }); }
 function saveStacks(){ cacheCatalog(); return db.ref('stacks').set(stacks).catch(function(e){ alert('Could not save to the database: '+e.message); }); }
+/* ── granular writes: save only the record that changed, never the whole catalog ── */
+function secIndex(sid){ for(var a=0;a<sections.length;a++){ if(sections[a].id===sid) return a; } return -1; }
+function pepIndex(si,pid){ var ps=(sections[si]&&sections[si].peptides)||[]; for(var b=0;b<ps.length;b++){ if(ps[b].id===pid) return b; } return -1; }
+function stkIndex(id){ for(var a=0;a<stacks.length;a++){ if(stacks[a].id===id) return a; } return -1; }
+function writePeptide(sid,pid){ var si=secIndex(sid); if(si<0) return saveSections(); var pi=pepIndex(si,pid); if(pi<0) return saveSections(); cacheCatalog(); return db.ref('sections/'+si+'/peptides/'+pi).set(sections[si].peptides[pi]).catch(function(e){ alert('Could not save to the database: '+e.message); }); }
+function writeSection(sid){ var si=secIndex(sid); if(si<0) return saveSections(); cacheCatalog(); return db.ref('sections/'+si).set(sections[si]).catch(function(e){ alert('Could not save to the database: '+e.message); }); }
+function writeStack(id){ var i=stkIndex(id); if(i<0) return saveStacks(); cacheCatalog(); return db.ref('stacks/'+i).set(stacks[i]).catch(function(e){ alert('Could not save to the database: '+e.message); }); }
 
 db.ref('sections').on('value', function(snap){ var v=snap.val(); if(v===null)return; sections=normSections(v); cacheCatalog(); scheduleRender(); }, function(e){console.warn(e);scheduleRender();});
 db.ref('stacks').on('value', function(snap){ var v=snap.val(); if(v===null){stacks=[];} else {stacks=normStacks(v);} cacheCatalog(); scheduleRender(); }, function(e){console.warn(e);});
@@ -475,11 +482,13 @@ function savePeptide(){
   var obj={ name:name, subtitle:_val('af-sub'), exclusive:exclDraft, desc:_val('af-desc'), overview:_val('af-overview'), mechanism:_val('af-mech'),
     recon:_val('af-recon'), dose:_val('af-dose'), image:imgDraft||urlv||'',
     components:parseComps(document.getElementById('af-comp').value), areas:parseAreas(document.getElementById('af-areas').value) };
-  if(editing){ var sec=sections.filter(function(s){return s.id===editing.sid;})[0]; var p=sec&&(sec.peptides||[]).filter(function(x){return x.id===editing.pid;})[0]; if(p)Object.assign(p,obj); }
-  else { var sid=document.getElementById('af-sec').value; var sec2=sections.filter(function(s){return s.id===sid;})[0]; if(sec2){sec2.peptides=sec2.peptides||[];sec2.peptides.push(Object.assign({id:'p-'+Date.now()},obj));} }
-  saveSections(); closeAddModal(); render();
+  var wsid=null, wpid=null;
+  if(editing){ var sec=sections.filter(function(s){return s.id===editing.sid;})[0]; var p=sec&&(sec.peptides||[]).filter(function(x){return x.id===editing.pid;})[0]; if(p){Object.assign(p,obj); wsid=editing.sid; wpid=editing.pid;} }
+  else { var sid=document.getElementById('af-sec').value; var sec2=sections.filter(function(s){return s.id===sid;})[0]; if(sec2){ var np=Object.assign({id:'p-'+Date.now()},obj); sec2.peptides=sec2.peptides||[]; sec2.peptides.push(np); wsid=sid; wpid=np.id; } }
+  if(wsid&&wpid){ writePeptide(wsid,wpid); } else { saveSections(); }
+  closeAddModal(); render();
 }
-function deleteCard(sid,pid){ if(!confirm('Delete this peptide?'))return; var sec=sections.filter(function(s){return s.id===sid;})[0]; if(sec)sec.peptides=(sec.peptides||[]).filter(function(p){return p.id!==pid;}); saveSections(); render(); }
+function deleteCard(sid,pid){ if(!confirm('Delete this peptide?'))return; var sec=sections.filter(function(s){return s.id===sid;})[0]; if(sec)sec.peptides=(sec.peptides||[]).filter(function(p){return p.id!==pid;}); writeSection(sid); render(); }
 
 /* stacks admin */
 function renderPepChips(){ var list=document.getElementById('sf-pep-list'); if(!stackPepDraft.length){list.innerHTML='<div style="color:#555;font-size:12px">No peptides added yet.</div>';return;} list.innerHTML=stackPepDraft.map(function(p,i){return '<span class="chip">'+esc(p)+'<button type="button" onclick="removePepChip('+i+')">✕</button></span>';}).join(''); }
@@ -507,9 +516,11 @@ function saveStack(){
   var urlv=_val('sf-image-url');
   var obj={ name:name, level:_val('sf-level'), desc:_val('sf-desc'), peptides:stackPepDraft.slice(),
     recon:_val('sf-recon'), protocol:_val('sf-protocol'), duration:_val('sf-duration'), image:stackImgDraft||urlv||'' };
-  if(editingStack){ var st=stacks.filter(function(s){return s.id===editingStack;})[0]; if(st)Object.assign(st,obj); }
-  else { stacks.push(Object.assign({id:'st-'+Date.now()},obj)); }
-  saveStacks(); hide('add-stack-modal'); render();
+  var wid=null;
+  if(editingStack){ var st=stacks.filter(function(s){return s.id===editingStack;})[0]; if(st){Object.assign(st,obj); wid=editingStack;} }
+  else { var ns=Object.assign({id:'st-'+Date.now()},obj); stacks.push(ns); wid=ns.id; }
+  if(wid){ writeStack(wid); } else { saveStacks(); }
+  hide('add-stack-modal'); render();
 }
 function deleteStack(id){ if(!confirm('Delete this stack?'))return; stacks=stacks.filter(function(s){return s.id!==id;}); saveStacks(); render(); }
 function switchToStack(sid,pid){ var sec=sections.filter(function(s){return s.id===sid;})[0]; var p=sec&&(sec.peptides||[]).filter(function(x){return x.id===pid;})[0]; openAddStackModal(p?p.name:''); }
