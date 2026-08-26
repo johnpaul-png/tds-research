@@ -1,266 +1,261 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>TDS Peptide Research</title>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="TDS Peptide Research">
-  <meta property="og:description" content="Advanced Reconstitution & Research Protocols.">
-  <meta property="og:image" content="https://tds-research.vercel.app/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://tds-research.vercel.app">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://tds-research.vercel.app/og-image.png">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { background: #0D0D0D; color: #F0F0F0; font-family: 'Barlow Condensed', sans-serif; -webkit-font-smoothing: antialiased; }
-    button, input, textarea, select { font-family: inherit; cursor: pointer; -webkit-appearance: none; }
-    textarea { resize: vertical; }
-    ::-webkit-scrollbar { width: 4px; height: 4px; }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0D0D0D">
+<title>TDS Peptide Research</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Spectral:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:#0D0D0D;color:#F0F0F0;font-family:'Barlow Condensed',sans-serif;-webkit-font-smoothing:antialiased;padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);min-height:100vh;min-height:100dvh;overflow-x:hidden}
+button,input,textarea,select{font-family:inherit;-webkit-appearance:none}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
+#hdr{background:#111;border-bottom:1px solid #1e1e1e;position:sticky;top:0;z-index:40;padding-top:env(safe-area-inset-top)}
+.hi{max-width:1050px;margin:0 auto;padding:0 14px}
+.ht{min-height:50px;padding:10px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.t1{font-size:clamp(13px,4vw,18px);font-weight:700;letter-spacing:clamp(1px,1vw,3px);white-space:nowrap}
+.t2{font-size:clamp(9px,2.5vw,11px);letter-spacing:1px;color:#888;margin-top:3px}
+.nav{display:flex;gap:8px;overflow-x:auto;border-top:1px solid #1a1a1a;scrollbar-width:none;padding:11px 0 13px;-webkit-overflow-scrolling:touch}
+.nav::-webkit-scrollbar{display:none}
+.nav button{flex:0 0 auto;background:#161616;border:1px solid #2a2a2a;border-radius:20px;color:#bbb;font-size:clamp(11px,3vw,13px);letter-spacing:.4px;white-space:nowrap;padding:9px 15px;min-height:38px;font-weight:600;cursor:pointer;transition:.15s}
+.nav button:hover{border-color:#444;color:#fff}
+.nav button:active{transform:scale(.96)}
+.nav button.exc{color:#e0a020;border-color:#5a4718;background:#1c1608}
+#admin-bar{display:flex;gap:6px;flex-shrink:0}
+.abtn{background:none;border:1px solid #333;border-radius:6px;color:#aaa;font-size:11px;letter-spacing:1px;padding:8px 11px;min-height:34px;cursor:pointer;white-space:nowrap}
+.abtn.red{background:#E02020;border-color:#E02020;color:#fff;font-weight:700}
+.sw{max-width:1050px;margin:0 auto;padding:16px 14px 0}
+.search{width:100%;background:#1C1C1C;border:1px solid #2A2A2A;border-radius:6px;color:#F0F0F0;padding:13px 14px;font-size:16px;outline:none}
+.search:focus{border-color:#444}.search::placeholder{color:#555}
+.content{max-width:1050px;margin:0 auto;padding:22px 14px calc(60px + env(safe-area-inset-bottom))}
+.section{margin-bottom:40px}
+.sh{display:flex;align-items:center;margin-bottom:16px}
+.sbar{width:3px;height:24px;background:#E02020;border-radius:2px;margin-right:10px;flex-shrink:0}
+.sbar.gold{background:#e0a020}
+.stitle{font-size:clamp(13px,3.5vw,16px);font-weight:700;letter-spacing:clamp(1px,.8vw,3px)}
+.sline{height:1px;background:linear-gradient(to right,#E02020,transparent);margin-top:7px}
+.sline.gold{background:linear-gradient(to right,#e0a020,transparent)}
+.grid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media(min-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{position:relative;background:#1C1C1C;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .15s}
+.card:hover{border-color:#3a3a3a}
+.crow{display:flex;align-items:stretch}
+.cthumb{flex:0 0 104px;width:104px;background:#0f0f0f;border-right:1px solid #232323;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cthumb img{width:104px;height:100%;object-fit:cover;display:block}
+.cthumb .ph{color:#444;font-size:9px;letter-spacing:1px;text-align:center;line-height:1.5}
+.cmain{flex:1;min-width:0;padding:13px 14px}
+.cn{color:#E02020;font-weight:700;font-size:clamp(15px,3.8vw,17px);line-height:1.3;word-break:break-word}
+.csub{color:#aaa;font-size:13px;font-style:italic;margin-top:3px}
+.cov{color:#CCC;font-size:13px;line-height:1.5;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cview{color:#5cca5c;font-size:11px;letter-spacing:1.5px;margin-top:8px;font-weight:700}
+.exq{font-size:9px;font-weight:700;letter-spacing:1.5px;color:#e0a020;border:1px solid #6a541f;background:#33280f;border-radius:4px;padding:2px 6px;margin-left:6px;vertical-align:middle}
+.card-actions{position:absolute;top:8px;right:8px;display:none;gap:6px;z-index:3}
+body.admin-mode .card-actions{display:flex}
+.btn-mini{border-radius:4px;font-size:10px;font-weight:700;padding:4px 7px;letter-spacing:.5px;border:1px solid;background:rgba(0,0,0,.55);white-space:nowrap;cursor:pointer}
+.btn-edit{border-color:#2a4a6a;color:#7fb0ff}
+.btn-switch{border-color:#2a5a2a;color:#5cca5c}
+.btn-del2{border-color:#6a1f1f;color:#ff6b6b}
+.miss-badge{display:none;margin-top:10px;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.35);border-radius:6px;color:#f0b429;font-size:10.5px;letter-spacing:.4px;padding:7px 10px;line-height:1.5}
+body.admin-mode .miss-badge.show{display:block}
+.foot{text-align:center;color:#2a2a2a;font-size:clamp(8px,1.8vw,9px);letter-spacing:2px;margin-top:32px;padding-bottom:20px}
+#loading{display:flex;align-items:center;justify-content:center;height:200px;color:#444;font-size:13px;letter-spacing:2px}
+.spin{width:20px;height:20px;border:2px solid #333;border-top-color:#E02020;border-radius:50%;animation:sp .8s linear infinite;margin-right:12px}
+@keyframes sp{to{transform:rotate(360deg)}}
+/* Profile modal */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:200;display:none;overflow-y:auto;padding:28px 18px}
+.ov.on{display:block}
+.pf{position:relative;max-width:920px;margin:0 auto;background:#0D0D0D;border:1px solid #242424;border-radius:18px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.pf-top{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:760px){.pf-top{grid-template-columns:420px 1fr}}
+.pf-img{display:block;width:100%;height:auto;max-height:60vh;object-fit:contain;background:#0D0D0D}
+@media(min-width:760px){.pf-img{max-height:80vh}}
+.pf-img-ph{width:100%;min-height:240px;background:#111;display:flex;align-items:center;justify-content:center;color:#444;font-size:12px;letter-spacing:1px}
+.pf-info{padding:26px 22px;position:relative}
+.pf-cat{color:#5bc8c0;font-size:11px;letter-spacing:2px;font-weight:700;text-transform:uppercase;margin-bottom:14px}
+.pf-cat b{color:#666;font-weight:400}
+.pf-name{font-family:'Spectral',Georgia,serif;font-size:clamp(30px,7vw,46px);font-weight:600;line-height:1.05;letter-spacing:.2px}
+.pf-sub{color:#aaa;font-size:15px;font-style:italic;margin-top:8px}
+.pf-dose{display:inline-block;border:1px solid #2f6360;color:#5bc8c0;border-radius:20px;padding:5px 14px;font-size:13px;margin-top:16px}
+.pf-close{position:absolute;top:14px;right:14px;width:42px;height:42px;border-radius:50%;background:rgba(20,20,20,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid #333;color:#fff;font-size:18px;cursor:pointer;z-index:20;display:flex;align-items:center;justify-content:center}
+.pf-qrows{margin-top:22px;border-top:1px solid #222}
+.pf-qr{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #1c1c1c;font-size:14px}
+.pf-qr .k{color:#888;letter-spacing:1px;text-transform:uppercase;font-size:12px}
+.pf-qr .v{color:#F0F0F0;text-align:right}
+.pf-body{padding:26px 22px}
+.pf-keyinfo{background:#0f1a1a;border:1px solid #23423f;border-radius:12px;padding:18px 20px;margin-bottom:24px;display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:640px){.pf-keyinfo{grid-template-columns:1fr 1fr}}
+.pf-ki-lbl{color:#5bc8c0;font-size:12px;letter-spacing:2px;font-weight:700;text-transform:uppercase;margin-bottom:7px}
+.pf-ki-val{color:#fff;font-size:clamp(15px,3.6vw,18px);line-height:1.6;white-space:pre-line}
+.pf-lbl{color:#888;font-size:11px;letter-spacing:2px;font-weight:700;text-transform:uppercase;margin-bottom:10px}
+.pf-ov{color:#DcDcDc;font-size:clamp(14px,3.4vw,16px);line-height:1.7;max-width:760px;white-space:pre-line}
+.pf-sec{margin-top:30px}
+.qa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:6px}
+@media(min-width:640px){.qa-grid{grid-template-columns:repeat(4,1fr)}}
+.qa{background:#141414;border:1px solid #222;border-radius:10px;padding:16px}
+.qa .n{font-size:26px;font-weight:700}
+.qa .t{color:#5bc8c0;font-size:11px;letter-spacing:1.5px;font-weight:700;text-transform:uppercase;margin:6px 0 4px}
+.qa .d{color:#777;font-size:12px;line-height:1.5}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:20px;color:#ccc;font-size:13px;padding:6px 14px}
+.disc{color:#666;font-size:12px;line-height:1.6;margin-top:30px;border-top:1px solid #1c1c1c;padding-top:18px}
+.pf-note{border-left:3px solid #2a5a5a;background:#0f1a1a;border-radius:0 8px 8px 0;padding:16px 18px;margin-top:26px;color:#cfe3e3;font-style:italic;font-size:15px;line-height:1.7}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:8px}
+.comp{background:#141414;border:1px solid #232323;border-radius:10px;padding:16px}
+.comp .cdot{width:24px;height:24px;border-radius:50%;border:1px solid #2a5a5a;color:#5cca5c;display:flex;align-items:center;justify-content:center;font-size:12px;margin-bottom:10px}
+.comp .cnm{color:#F0F0F0;font-size:15px;font-weight:600}
+.comp .cnt{color:#999;font-size:13px;line-height:1.5;margin-top:6px}
+@media(max-width:520px){.ov{padding:14px 10px}.pf{border-radius:14px}.pf-info{padding:20px 16px}.pf-body{padding:20px 16px}.pf-close{top:12px;right:12px;width:38px;height:38px}.qa-grid{grid-template-columns:1fr 1fr;gap:10px}.qa{padding:13px}.pf-qr{font-size:13px}.comp-grid{grid-template-columns:1fr;gap:10px}}
+/* Admin modals */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+.overlay.show{display:flex}
+.modal{background:#161616;border:1px solid #2a2a2a;border-radius:12px;padding:24px;max-width:560px;width:100%;margin:auto}
+.modal-title{font-size:18px;font-weight:700;letter-spacing:2px;margin-bottom:4px}
+.modal-sub{color:#888;font-size:12px;letter-spacing:.5px;margin-bottom:18px;line-height:1.5}
+.fw{margin-bottom:14px}
+.fl{font-size:9px;color:#888;letter-spacing:1.5px;font-weight:700;margin-bottom:5px;text-transform:uppercase}
+.fl span{color:#555;letter-spacing:0}
+.fi{width:100%;background:#0f0f0f;border:1px solid #333;border-radius:6px;color:#F0F0F0;padding:11px;font-size:15px}
+.fi:focus{outline:none;border-color:#555}
+textarea.fi{resize:vertical;min-height:52px;line-height:1.5}
+.brow{display:flex;gap:8px;margin-top:6px}
+.bprim{flex:1;background:#E02020;border:none;border-radius:6px;color:#fff;font-weight:700;font-size:14px;padding:13px;letter-spacing:1px;cursor:pointer}
+.bsec2{background:none;border:1px solid #333;border-radius:6px;color:#888;font-size:14px;padding:13px 18px;cursor:pointer}
+.perr{color:#E02020;font-size:11px;margin-top:8px;letter-spacing:1px;display:none}
+#af-img-prev,#sf-img-prev{width:92px;height:92px;border:1px solid #333;border-radius:8px;object-fit:contain;display:none;flex-shrink:0}
+.img-row{display:flex;gap:12px;align-items:flex-start}
+.hint{font-size:10px;color:#666;margin-top:5px}
+.chip-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip-list .chip{display:inline-flex;align-items:center;gap:7px}
+.chip-list .chip button{background:none;border:none;color:#888;font-size:13px;cursor:pointer}
+.bchip{background:#242424;border:1px solid #383838;border-radius:6px;color:#fff;font-weight:700;padding:0 14px;cursor:pointer}
+/* ── professional admin editor ── */
+.modal-pro{max-width:640px;width:100%;background:#141414;border:1px solid #2a2a2a;border-radius:16px;padding:0;overflow:hidden;margin:auto;box-shadow:0 30px 90px rgba(0,0,0,.65)}
+.pro-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid #242424;position:sticky;top:0;background:#141414;z-index:2}
+.pro-title{font-size:20px;font-weight:700;letter-spacing:1px}
+.pro-sub{color:#888;font-size:12px;margin-top:4px;line-height:1.4}
+.pro-x{width:34px;height:34px;border-radius:50%;background:#1e1e1e;border:1px solid #333;color:#aaa;font-size:14px;cursor:pointer;flex-shrink:0}
+.pro-x:hover{border-color:#555;color:#fff}
+.pro-body{padding:20px 22px;max-height:68vh;overflow-y:auto}
+.pro-group{margin-bottom:24px}
+.pro-group:last-child{margin-bottom:4px}
+.pro-glabel{font-size:10px;font-weight:700;letter-spacing:2.5px;color:#5bc8c0;text-transform:uppercase;margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid #222}
+.fw2{margin-bottom:13px}
+.fw2 .fl{font-size:9px;color:#9a9a9a;letter-spacing:1.5px;font-weight:700;margin-bottom:6px;text-transform:uppercase}
+.fw2 .fl span{color:#555;letter-spacing:0}
+.pro-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.pro-2col{grid-template-columns:1fr}}
+.pro-foot{display:flex;gap:10px;justify-content:flex-end;padding:16px 22px;border-top:1px solid #242424;position:sticky;bottom:0;background:#141414}
+.bprim{background:#E02020;border:none;border-radius:9px;color:#fff;font-weight:700;font-size:13.5px;padding:12px 22px;letter-spacing:1px;cursor:pointer}
+.bprim:hover{filter:brightness(1.08)}
+.bsec2{background:#1c1c1c;border:1px solid #333;border-radius:9px;color:#aaa;font-size:13.5px;padding:12px 20px;cursor:pointer}
+.bsec2:hover{border-color:#555;color:#fff}
+/* exclusive toggle switch */
+.excl-toggle{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#161616;border:1px solid #333;border-radius:11px;padding:13px 15px;cursor:pointer;margin-top:4px;transition:.15s;user-select:none}
+.excl-toggle:hover{border-color:#4a4a4a}
+.excl-toggle.on{border-color:#6a541f;background:linear-gradient(180deg,#1e1708,#161206)}
+.excl-t{font-weight:700;letter-spacing:1px;font-size:13px;color:#888;transition:.15s}
+.excl-toggle.on .excl-t{color:#e0a020}
+.excl-d{color:#777;font-size:11.5px;margin-top:3px;line-height:1.4}
+.switch{width:48px;height:27px;border-radius:20px;background:#333;position:relative;transition:.18s;flex-shrink:0}
+.switch .knob{position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#888;transition:.18s}
+.excl-toggle.on .switch{background:#e0a020}
+.excl-toggle.on .switch .knob{left:24px;background:#fff}
 
-    #hdr { background: #111; border-bottom: 1px solid #1e1e1e; position: sticky; top: 0; z-index: 100; }
-    .hdr-inner { max-width: 1000px; margin: 0 auto; padding: 0 14px; }
-    .hdr-top { display: flex; align-items: center; justify-content: space-between; min-height: 50px; padding: 8px 0; gap: 10px; flex-wrap: wrap; row-gap: 10px; }
-    .hdr-title-wrap { flex: 1 1 auto; }
-    .hdr-logo-title { font-size: clamp(13px, 4vw, 18px); font-weight: 700; letter-spacing: clamp(1px, 1vw, 3px); line-height: 1.1; white-space: nowrap; }
-    .hdr-logo-sub { font-size: clamp(9px, 2.5vw, 11px); letter-spacing: 1px; color: #888; margin-top: 3px; }
-    #admin-bar { flex-wrap: wrap; justify-content: flex-end; }
-    @media (max-width: 700px) {
-      #admin-bar { flex-basis: 100%; justify-content: flex-start; }
-      .btn-admin, .btn-add, .btn-signout, .admin-badge { padding: 6px 11px; letter-spacing: 1px; }
-    }
-
-    .nav-bar { display: flex; overflow-x: auto; overflow-y: hidden; border-top: 1px solid #1a1a1a; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-    .nav-bar::-webkit-scrollbar { display: none; }
-    .nav-btn { background: none; border: none; border-right: 1px solid #1e1e1e; color: #777; font-size: clamp(10px, 2.8vw, 12px); letter-spacing: 1px; white-space: nowrap; padding: 7px 12px; flex-shrink: 0; }
-    .nav-btn:active { color: #E02020; background: rgba(224,32,32,.06); }
-
-    .search-wrap { background: #0D0D0D; }
-    .search-input { width: 100%; background: #1C1C1C; border: 1px solid #2A2A2A; border-radius: 6px; color: #F0F0F0; padding: 12px 14px 12px 40px; font-size: clamp(13px, 3vw, 15px); outline: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 14px center; }
-    .search-input:focus { border-color: #444; }
-    .search-input::placeholder { color: #555; }
-
-    .content { max-width: 1000px; margin: 0 auto; padding: 24px 14px 60px; }
-    .section { margin-bottom: 44px; }
-    .section-hdr { display: flex; align-items: center; margin-bottom: 18px; }
-    .section-bar { width: 3px; height: 24px; background: #E02020; border-radius: 2px; margin-right: 10px; flex-shrink: 0; }
-    .section-title { font-size: clamp(13px, 3.5vw, 16px); font-weight: 700; letter-spacing: clamp(1px, 0.8vw, 3px); }
-    .section-line { height: 1px; background: linear-gradient(to right, #E02020, transparent); margin-top: 7px; }
-
-    .cards-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
-    @media (min-width: 560px) { .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (min-width: 900px) { .cards-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-
-    .card { background: #1C1C1C; border: 1px solid #2A2A2A; border-radius: 8px; padding: 14px; position: relative; overflow-wrap: break-word; }
-    .card-name { color: #E02020; font-weight: 700; font-size: clamp(15px, 3.5vw, 17px); margin-bottom: 6px; line-height: 1.3; }
-    .card-desc { color: #CCCCCC; font-size: clamp(13px, 3vw, 14px); line-height: 1.6; margin-bottom: 12px; }
-    .card-divider { border-top: 1px solid #3A0000; padding-top: 10px; margin-bottom: 8px; }
-    .card-label { color: #C41A1A; font-size: clamp(9px, 2.5vw, 10px); font-weight: 700; letter-spacing: 1.5px; margin-bottom: 5px; text-transform: uppercase; }
-    .card-recon { color: #F0F0F0; font-size: clamp(13px, 3vw, 14px); line-height: 1.6; }
-    .card-dose-wrap { margin-top: 9px; }
-    .card-dose { color: #CCCCCC; font-size: clamp(13px, 3vw, 14px); line-height: 1.6; }
-
-    .delete-btn { display: none; position: absolute; top: 10px; right: 10px; background: rgba(224,32,32,.14); border: 1px solid #E02020; border-radius: 4px; color: #ff6b6b; font-size: 10px; font-weight: 700; padding: 3px 8px; letter-spacing: 1px; }
-    .delete-btn:active { background: #E02020; color: #fff; }
-    body.admin-mode .delete-btn { display: block; }
-
-    /* Peptide-card admin action bar (Edit / Switch to Stack / Delete) */
-    .card-admin-bar { display: none; gap: 6px; flex-wrap: wrap; margin-top: 12px; padding-top: 10px; border-top: 1px solid #2A2A2A; }
-    body.admin-mode .card-admin-bar { display: flex; }
-    .btn-mini { border-radius: 4px; font-size: 10px; font-weight: 700; padding: 4px 9px; letter-spacing: 1px; border: 1px solid; background: none; white-space: nowrap; }
-    .btn-edit { border-color: #3a5a8a; color: #7fb0ff; background: rgba(55,138,221,.14); }
-    .btn-edit:active { background: #2f6fc0; color: #fff; }
-    .btn-switch { border-color: #2a5a2a; color: #5cca5c; background: rgba(60,200,90,.12); }
-    .btn-switch:active { background: #2a8a2a; color: #fff; }
-    .btn-del2 { border-color: #E02020; color: #ff6b6b; background: rgba(224,32,32,.14); }
-    .btn-del2:active { background: #E02020; color: #fff; }
-
-    .admin-badge { background: #1a3a1a; border: 1px solid #2a5a2a; border-radius: 4px; padding: 5px 10px; font-size: clamp(10px, 2.5vw, 12px); color: #5cca5c; letter-spacing: 1px; white-space: nowrap; }
-    .btn-add { background: #E02020; border: none; border-radius: 4px; color: #fff; font-size: clamp(10px, 2.5vw, 12px); padding: 6px 14px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
-    .btn-signout { background: none; border: 1px solid #333; border-radius: 4px; color: #666; font-size: clamp(10px, 2.5vw, 12px); padding: 6px 12px; letter-spacing: 1px; }
-    .btn-admin { background: none; border: 1px solid #444; border-radius: 4px; color: #aaa; font-size: clamp(10px, 2.5vw, 12px); padding: 6px 16px; letter-spacing: 2px; font-weight: 700; white-space: nowrap; }
-
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.92); display: flex; align-items: center; justify-content: center; z-index: 999; padding: 16px; }
-    .modal { background: #1C1C1C; border: 1px solid #2A2A2A; border-radius: 10px; padding: 28px 24px; width: 100%; max-width: 340px; }
-    .modal-add { max-width: 440px; max-height: calc(100vh - 32px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
-    .modal-title { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #F0F0F0; margin-bottom: 5px; }
-    .modal-sub { font-size: 10px; color: #555; margin-bottom: 20px; letter-spacing: 1px; }
-    .field-label { font-size: 9px; color: #C41A1A; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 5px; }
-    .field-wrap { margin-bottom: 14px; }
-    .field-input { width: 100%; background: #242424; border: 1px solid #383838; border-radius: 4px; color: #F0F0F0; padding: 10px; font-size: 16px; }
-    .field-input:focus { outline: none; border-color: #555; }
-    .field-textarea { width: 100%; background: #242424; border: 1px solid #383838; border-radius: 4px; color: #F0F0F0; padding: 10px; font-size: 16px; resize: vertical; }
-    .field-textarea:focus { outline: none; border-color: #555; }
-    .field-select { width: 100%; background: #242424; border: 1px solid #383838; border-radius: 4px; color: #F0F0F0; padding: 10px; font-size: 16px; }
-    .btn-row { display: flex; gap: 8px; margin-top: 20px; }
-    .btn-primary { flex: 1; background: #E02020; border: none; border-radius: 4px; color: #fff; font-size: 13px; font-weight: 700; padding: 12px; letter-spacing: 1px; }
-    .btn-secondary { flex: 1; background: none; border: 1px solid #383838; border-radius: 4px; color: #555; font-size: 13px; padding: 12px; letter-spacing: 1px; }
-    .pass-error { color: #E02020; font-size: 9px; margin-top: 6px; letter-spacing: 1px; display: none; }
-    .pass-input-error { border-color: #E02020 !important; }
-    .footer { text-align: center; color: #2a2a2a; font-size: clamp(7px, 1.8vw, 8px); letter-spacing: 2px; margin-top: 32px; padding-bottom: 20px; }
-
-    /* ── STACKS ── */
-    .stack-card { background: #1C1C1C; border: 1px solid #2A2A2A; border-radius: 8px; padding: 16px; position: relative; display: flex; flex-direction: column; }
-    .stack-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
-    .stack-name { color: #E02020; font-weight: 700; font-size: clamp(15px, 3.5vw, 18px); line-height: 1.3; flex: 1; }
-    .level-badge { font-size: clamp(8px, 2.2vw, 10px); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 0 10px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; height: 26px; display: inline-flex; align-items: center; }
-    .level-beginner { background: #12331a; border: 1px solid #2a5a2a; color: #5cca5c; }
-    .level-intermediate { background: #33280f; border: 1px solid #6a541f; color: #e0a020; }
-    .level-advanced { background: #3a0000; border: 1px solid #6a1f1f; color: #ff5050; }
-    .stack-desc { color: #CCCCCC; font-size: clamp(13px, 3vw, 14px); line-height: 1.6; margin-bottom: 12px; }
-    .stack-block { border-top: 1px solid #3A0000; padding-top: 10px; margin-top: 8px; }
-    .stack-label { color: #C41A1A; font-size: clamp(9px, 2.5vw, 10px); font-weight: 700; letter-spacing: 1.5px; margin-bottom: 5px; text-transform: uppercase; }
-    .stack-value { color: #F0F0F0; font-size: clamp(13px, 3vw, 14px); line-height: 1.6; }
-    .stack-value.muted { color: #CCCCCC; }
-    .stack-peptides { list-style: none; padding: 0; margin: 0; }
-    .stack-peptides li { color: #F0F0F0; font-size: clamp(13px, 3vw, 14px); line-height: 1.7; padding-left: 14px; position: relative; }
-    .stack-peptides li::before { content: ''; position: absolute; left: 0; top: 10px; width: 5px; height: 5px; background: #E02020; border-radius: 50%; }
-    .stack-foot { margin-top: auto; border-top: 1px solid #3A0000; padding-top: 11px; }
-    .stack-cycle { color: #F0F0F0; font-size: clamp(14px, 3.2vw, 16px); font-weight: 700; line-height: 1.45; }
-
-    /* Chip-style included-peptides input */
-    .chip-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-    .chip { display: inline-flex; align-items: center; gap: 7px; background: #242424; border: 1px solid #383838; border-radius: 4px; color: #F0F0F0; font-size: 13px; padding: 5px 9px; }
-    .chip button { background: none; border: none; color: #888; font-size: 14px; line-height: 1; padding: 0; }
-    .chip button:active { color: #E02020; }
-    .chip-empty { color: #555; font-size: 12px; letter-spacing: 1px; margin-top: 8px; }
-    .btn-chip-add { flex: 0 0 auto; background: #E02020; border: none; border-radius: 4px; color: #fff; font-size: 13px; font-weight: 700; padding: 0 16px; letter-spacing: 1px; }
-
-    /* Loading spinner */
-    #loading { display: flex; align-items: center; justify-content: center; height: 200px; color: #444; font-size: 13px; letter-spacing: 2px; }
-    .spinner { width: 20px; height: 20px; border: 2px solid #333; border-top-color: #E02020; border-radius: 50%; animation: spin .8s linear infinite; margin-right: 12px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-  </style>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-</head>
-<body>
-
-<div id="hdr">
-  <div class="hdr-inner">
-    <div class="hdr-top">
-      <div class="hdr-title-wrap">
-        <div class="hdr-logo-title">TDS PEPTIDE RESEARCH</div>
-        <div class="hdr-logo-sub">FOR RESEARCH PURPOSES ONLY · NOT FOR HUMAN CONSUMPTION</div>
-      </div>
-      <div id="admin-bar" style="display:flex;gap:6px;align-items:center;flex-shrink:0">
-        <button class="btn-admin" onclick="openPassModal()">ADMIN</button>
-      </div>
-    </div>
-    <div class="nav-bar" id="nav-bar"></div>
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+</head><body>
+<div id="hdr"><div class="hi">
+  <div class="ht">
+    <div><div class="t1">TDS PEPTIDE RESEARCH</div><div class="t2">FOR RESEARCH PURPOSES ONLY · NOT FOR HUMAN CONSUMPTION</div></div>
+    <div id="admin-bar"></div>
   </div>
-</div>
+  <div class="nav" id="nav"></div>
+</div></div>
+<div class="sw"><input class="search" id="search" type="text" placeholder="Search peptides..." oninput="doSearch(this.value)" autocomplete="off"></div>
+<div class="content" id="content"><div id="loading"><div class="spin"></div>LOADING…</div></div>
+<div class="ov" id="ov" onclick="if(event.target===this)closeProfile()"><div class="pf" id="pf"></div></div>
 
-<div class="search-wrap" style="max-width:1000px;margin:0 auto;padding:16px 14px 0;">
-  <input class="search-input" id="search-input" type="text" placeholder="Search peptides..." oninput="handleSearch(this.value)" autocomplete="off" autocorrect="off" spellcheck="false">
-</div>
-
-<div class="content" id="content">
-  <div id="loading"><div class="spinner"></div>LOADING...</div>
-</div>
-
-<!-- Password Modal -->
-<div class="overlay" id="pass-modal" style="display:none" onclick="if(event.target===this)closePassModal()">
-  <div class="modal">
+<!-- password modal -->
+<div class="overlay" id="pass-modal" onclick="if(event.target===this)hide('pass-modal')">
+  <div class="modal" style="max-width:340px;text-align:center">
     <div class="modal-title">ADMIN ACCESS</div>
-    <div class="modal-sub">Enter your admin password to continue.</div>
-    <input class="field-input" id="pass-input" type="password" placeholder="Password" oninput="clearPassError()" onkeydown="if(event.key==='Enter')submitPass()">
-    <div class="pass-error" id="pass-error">INCORRECT PASSWORD</div>
-    <div class="btn-row">
-      <button class="btn-primary" onclick="submitPass()">ENTER</button>
-      <button class="btn-secondary" onclick="closePassModal()">CANCEL</button>
-    </div>
+    <div class="modal-sub">Enter your admin password.</div>
+    <input class="fi" id="pass-input" type="password" placeholder="Password" style="text-align:center" onkeydown="if(event.key==='Enter')submitPass()" oninput="document.getElementById('pass-error').style.display='none'">
+    <div class="perr" id="pass-error">INCORRECT PASSWORD</div>
+    <div class="brow" style="margin-top:14px"><button class="bprim" onclick="submitPass()">ENTER</button><button class="bsec2" onclick="hide('pass-modal')">CANCEL</button></div>
   </div>
 </div>
 
-<!-- Add Peptide Modal -->
-<div class="overlay" id="add-modal" style="display:none" onclick="if(event.target===this)closeAddModal()">
-  <div class="modal modal-add">
-    <div class="modal-title" id="add-modal-title">ADD NEW PEPTIDE</div>
-    <div class="modal-sub">Fill in all fields below</div>
-    <div class="field-wrap">
-      <div class="field-label">SECTION</div>
-      <select class="field-select" id="af-sec"></select>
+<!-- peptide editor modal -->
+<div class="overlay" id="add-modal" onclick="if(event.target===this)closeAddModal()">
+  <div class="modal-pro">
+    <div class="pro-head">
+      <div><div class="pro-title" id="pep-modal-title">Add Peptide</div><div class="pro-sub">Fill in what you have — missing fields get flagged automatically.</div></div>
+      <button class="pro-x" onclick="closeAddModal()">✕</button>
     </div>
-    <div class="field-wrap">
-      <div class="field-label">NAME</div>
-      <input class="field-input" id="af-name" type="text" placeholder="e.g. BPC-157 5mg">
-    </div>
-    <div class="field-wrap">
-      <div class="field-label">DESCRIPTION</div>
-      <textarea class="field-textarea" id="af-desc" placeholder="Brief description..." rows="3"></textarea>
-    </div>
-    <div class="field-wrap">
-      <div class="field-label">RECONSTITUTION</div>
-      <textarea class="field-textarea" id="af-recon" placeholder="Reconstitution instructions..." rows="2"></textarea>
-    </div>
-    <div class="field-wrap" style="margin-bottom:22px">
-      <div class="field-label">DOSING</div>
-      <textarea class="field-textarea" id="af-dose" placeholder="Dosing instructions..." rows="2"></textarea>
-    </div>
-    <div style="display:flex;gap:8px">
-      <button class="btn-primary" id="add-modal-btn" onclick="submitAdd()">ADD PEPTIDE</button>
-      <button class="btn-secondary" onclick="closeAddModal()">CANCEL</button>
-    </div>
-  </div>
-</div>
-
-<!-- Add Stack Modal -->
-<div class="overlay" id="add-stack-modal" style="display:none" onclick="if(event.target===this)closeAddStackModal()">
-  <div class="modal modal-add">
-    <div class="modal-title" id="add-stack-title">ADD NEW STACK</div>
-    <div class="modal-sub">Build a peptide stack — admin only</div>
-    <div class="field-wrap">
-      <div class="field-label">LEVEL <span style="color:#555">(OPTIONAL)</span></div>
-      <select class="field-select" id="sf-level">
-        <option value="">— None —</option>
-        <option value="beginner">Beginner</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="advanced">Advanced</option>
-      </select>
-    </div>
-    <div class="field-wrap">
-      <div class="field-label">NAME <span style="color:#555">(REQUIRED)</span></div>
-      <input class="field-input" id="sf-name" type="text" placeholder="e.g. Recovery & Healing Stack">
-    </div>
-    <div class="field-wrap">
-      <div class="field-label">DESCRIPTION <span style="color:#555">(REQUIRED)</span></div>
-      <textarea class="field-textarea" id="sf-desc" placeholder="What this stack is for..." rows="3"></textarea>
-    </div>
-    <div class="field-wrap">
-      <div class="field-label">INCLUDED PEPTIDES</div>
-      <div style="display:flex;gap:8px">
-        <input class="field-input" id="sf-pep-input" type="text" placeholder="e.g. BPC-157 5mg" onkeydown="if(event.key==='Enter'){event.preventDefault();addPepChip();}">
-        <button type="button" class="btn-chip-add" onclick="addPepChip()">ADD</button>
+    <div class="pro-body">
+      <div class="pro-group">
+        <div class="pro-glabel">Core</div>
+        <div class="fw2" id="af-sec-wrap"><div class="fl">Section</div><select class="fi" id="af-sec"></select></div>
+        <div class="pro-2col">
+          <div class="fw2"><div class="fl">Name</div><input class="fi" id="af-name" type="text" placeholder="e.g. BPC-157 5mg"></div>
+          <div class="fw2"><div class="fl">Subtitle</div><input class="fi" id="af-sub" type="text" placeholder="e.g. Copper Peptide"></div>
+        </div>
+        <div class="excl-toggle" id="af-excl-toggle" onclick="toggleExcl()">
+          <div><div class="excl-t">★ EXCLUSIVE</div><div class="excl-d">Feature in the Exclusive section (also keeps it in its category with a tag)</div></div>
+          <div class="switch"><div class="knob"></div></div>
+        </div>
       </div>
+      <div class="pro-group">
+        <div class="pro-glabel">Photo</div>
+        <div class="img-row"><img id="af-img-prev" alt="">
+          <div style="flex:1"><input class="fi" id="af-image-url" type="text" placeholder="paste an image URL"><div class="hint">or upload a file:</div><input type="file" accept="image/*" onchange="pickImg(this)" style="font-size:12px;color:#888;margin-top:5px"></div>
+        </div>
+      </div>
+      <div class="pro-group">
+        <div class="pro-glabel">Content</div>
+        <div class="fw2"><div class="fl">Description <span>(short)</span></div><textarea class="fi" id="af-desc" rows="2" placeholder="Brief one-liner..."></textarea></div>
+        <div class="fw2"><div class="fl">Overview <span>(long)</span></div><textarea class="fi" id="af-overview" rows="4" placeholder="Full overview..."></textarea></div>
+        <div class="fw2"><div class="fl">Mechanism of Action</div><textarea class="fi" id="af-mech" rows="3" placeholder="How it works..."></textarea></div>
+        <div class="fw2"><div class="fl">Components <span>(one per line: Name | Amount | Note)</span></div><textarea class="fi" id="af-comp" rows="3" placeholder="NAD+ | 100mg | Foundational fuel"></textarea></div>
+        <div class="fw2"><div class="fl">Research Areas <span>(one per line)</span></div><textarea class="fi" id="af-areas" rows="3" placeholder="Tissue repair&#10;Wound healing"></textarea></div>
+      </div>
+      <div class="pro-group">
+        <div class="pro-glabel">Protocol</div>
+        <div class="fw2"><div class="fl">Reconstitution</div><textarea class="fi" id="af-recon" rows="2" placeholder="e.g. Add 2ml bacteriostatic water"></textarea></div>
+        <div class="fw2"><div class="fl">Dosing</div><textarea class="fi" id="af-dose" rows="2" placeholder="e.g. 10 units daily = 250mcg"></textarea></div>
+      </div>
+    </div>
+    <div class="pro-foot"><button class="bsec2" onclick="closeAddModal()">Cancel</button><button class="bprim" onclick="savePeptide()">Save peptide</button></div>
+  </div>
+</div>
+
+<!-- stack modal -->
+<div class="overlay" id="add-stack-modal" onclick="if(event.target===this)hide('add-stack-modal')">
+  <div class="modal">
+    <div class="modal-title" id="stack-modal-title">ADD NEW STACK</div>
+    <div class="modal-sub">Build a peptide stack — admin only.</div>
+    <div class="fw"><div class="fl">Level <span>(optional)</span></div><select class="fi" id="sf-level"><option value="">— None —</option><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option></select></div>
+    <div class="fw"><div class="fl">Name</div><input class="fi" id="sf-name" type="text" placeholder="e.g. Recovery & Healing Stack"></div>
+    <div class="fw"><div class="fl">Photo</div>
+      <div class="img-row"><img id="sf-img-prev" alt="">
+        <div style="flex:1"><input class="fi" id="sf-image-url" type="text" placeholder="paste an image URL"><div class="hint">or upload a file:</div><input type="file" accept="image/*" onchange="pickStackImg(this)" style="font-size:12px;color:#888;margin-top:5px"></div>
+      </div>
+    </div>
+    <div class="fw"><div class="fl">Description</div><textarea class="fi" id="sf-desc" rows="3" placeholder="What this stack is for..."></textarea></div>
+    <div class="fw"><div class="fl">Included Peptides</div>
+      <div style="display:flex;gap:8px"><input class="fi" id="sf-pep-input" type="text" placeholder="e.g. BPC-157 5mg" onkeydown="if(event.key==='Enter'){event.preventDefault();addPepChip();}"><button type="button" class="bchip" onclick="addPepChip()">ADD</button></div>
       <div id="sf-pep-list" class="chip-list"></div>
     </div>
-    <div class="field-wrap">
-      <div class="field-label">RECONSTITUTION</div>
-      <textarea class="field-textarea" id="sf-recon" placeholder="Reconstitution instructions..." rows="2"></textarea>
-    </div>
-    <div class="field-wrap">
-      <div class="field-label">PROTOCOL / DOSING</div>
-      <textarea class="field-textarea" id="sf-protocol" placeholder="Combined dosing / timing..." rows="2"></textarea>
-    </div>
-    <div class="field-wrap" style="margin-bottom:22px">
-      <div class="field-label">CYCLE / DURATION <span style="color:#555">(OPTIONAL)</span></div>
-      <input class="field-input" id="sf-duration" type="text" placeholder="e.g. 8-12 weeks">
-    </div>
-    <div style="display:flex;gap:8px">
-      <button class="btn-primary" id="add-stack-btn" onclick="submitAddStack()">ADD STACK</button>
-      <button class="btn-secondary" onclick="closeAddStackModal()">CANCEL</button>
-    </div>
+    <div class="fw"><div class="fl">Reconstitution</div><textarea class="fi" id="sf-recon" rows="2" placeholder="Reconstitution instructions..."></textarea></div>
+    <div class="fw"><div class="fl">Protocol / Dosing</div><textarea class="fi" id="sf-protocol" rows="2" placeholder="Combined dosing / timing..."></textarea></div>
+    <div class="fw"><div class="fl">Cycle / Duration <span>(optional)</span></div><input class="fi" id="sf-duration" type="text" placeholder="e.g. 8-12 weeks"></div>
+    <div class="brow"><button class="bprim" onclick="saveStack()">SAVE STACK</button><button class="bsec2" onclick="hide('add-stack-modal')">CANCEL</button></div>
   </div>
 </div>
 
 <script>
-// ── Firebase config ──────────────────────────────────────────────────────────
 const firebaseConfig = {
   apiKey: "AIzaSyC-xxWe8Dp77kWgfC5cpgJde1KfButnYF0",
   authDomain: "tds-research.firebaseapp.com",
@@ -272,543 +267,220 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
-
-// ── Admin password ───────────────────────────────────────────────────────────
 const PASS = "TDS2026";
-let isAdmin = false;
+const LS = 'tds_research_v1';
+const LEVELS = { beginner:"Beginner", intermediate:"Intermediate", advanced:"Advanced" };
 
-// ── localStorage cache (instant offline loads) ───────────────────────────────
-const LS_KEY = 'tds_catalog_v1';
-function cacheCatalog(){ try { localStorage.setItem(LS_KEY, JSON.stringify({ sections, stacks })); } catch(e){} }
+let sections = [], stacks = [], recs = [], stackRecs = [];
+let isAdmin = false, editing = null, imgDraft = '', stackPepDraft = [], exclDraft = false, editingStack = null, stackImgDraft = '';
 
-// ── Default seed data ────────────────────────────────────────────────────────
-const DEFAULT_SECTIONS = [
-  {id:"s1",title:"INJURY RECOVERY & TISSUE REPAIR",peptides:[
-    {id:"p1",name:"BPC-157 5mg",desc:"Accelerates healing of tendons, ligaments, muscles, and gut tissue.",recon:"Add 2ml of bacteriostatic or sterile water.",dose:"Men loading: 20 units daily = 500mcg. Men regular: 10 units daily = 250mcg. Women loading: 15 units daily = 375mcg. Women regular: 10 units daily = 250mcg."},
-    {id:"p2",name:"BPC-157 10mg",desc:"Accelerates healing of tendons, ligaments, muscles, and gut tissue.",recon:"Add 2ml of bacteriostatic or sterile water.",dose:"Men loading: 10 units daily = 500mcg. Men regular: 5 units daily = 250mcg. Women loading: 7.5 units daily = 375mcg. Women regular: 5 units daily = 250mcg."},
-    {id:"p3",name:"TB-500 5mg",desc:"Thymosin Beta-4; promotes tissue repair, reduces inflammation, and supports muscle recovery.",recon:"Add 2ml of bacteriostatic or sterile water.",dose:"Both genders: 10-15 units daily = 250-375mcg."},
-    {id:"p4",name:"TB-500 10mg",desc:"Thymosin Beta-4; promotes tissue repair, reduces inflammation, and supports muscle recovery.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Both genders: 7.5-10 units daily = 250-333mcg."},
-    {id:"p5",name:"Wolverine 10mg (BPC-157 5mg + TB-500 5mg)",desc:"Combined recovery stack for enhanced healing synergy between both peptides.",recon:"Add 2mls of bacteriostatic or sterile water.",dose:"Both genders: 10 units daily = 250mcg of each compound. Both genders: 15 units daily = 375mcg of each compound."},
-    {id:"p6",name:"Klow 80mg",desc:"Blend targeting inflammation reduction and systemic tissue regeneration.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Both genders: 7.5 units daily = 250mcg BPC, KPV & TB-500 each + 1.25mg GHK."},
-    {id:"p7",name:"Glow 70mg",desc:"Multi-peptide blend supporting skin health and full-body repair.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 7.5-10 units daily = 250-333mcg of BPC/TB and 1.25-1.6mg GHK."},
-    {id:"p8",name:"Rejuvenate Blend 70mg (BPC / KPV / GHK)",desc:"Triple blend targeting gut healing, anti-inflammation, and cellular regeneration.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 7.5-10 units daily = 250-333mcg of KPV/BPC and 1.25-1.6mg GHK."},
-    {id:"p9",name:"KPV 10mg",desc:"Anti-inflammatory tripeptide supporting gut health and wound healing.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 7.5-10 units daily = 250-333mcg."},
-    {id:"p10",name:"Ara-290 10mg",desc:"Targets nerve repair and chronic pain; modulates inflammatory response pathways.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 7.5-10 units daily = 250-333mcg."},
-  ]},
-  {id:"s2",title:"FAT OXIDATION & METABOLISM",peptides:[
-    {id:"p11",name:"Retatrutide 10mg",desc:"Triple receptor agonist (GIP/GLP-1/glucagon) promoting significant fat loss and metabolic regulation.",recon:"Add 2ml of bacteriostatic or sterile water.",dose:"Men: 10 units twice weekly = 500mcg per dose. Women: 5 units twice weekly = 250mcg per dose."},
-    {id:"p12",name:"Burnitol 10mg (Retatrutide 5mg + Cagrilintide 5mg)",desc:"Quintuple receptor agonist targeting GIP, GLP-1, glucagon, amylin, and calcitonin pathways for comprehensive fat loss.",recon:"Add 2ml of sterile water.",dose:"Take 10 units twice weekly = 500mcg Retatrutide + 500mcg Cagrilintide weekly."},
-    {id:"p13",name:"Mando-Lean 15mg (AOD-9604 5mg + Mots-c 5mg + Tesamorelin 5mg)",desc:"Triple metabolism blend targeting fat breakdown, mitochondrial function, and visceral fat.",recon:"Add 3ml of sterile water. Does NOT react well to BAC water.",dose:"Take 15 units daily = 250mcg of each compound."},
-    {id:"p14",name:"5-Amino-1MQ 5mg",desc:"Blocks NNMT enzyme to boost NAD+ levels and activate fat cell metabolism.",recon:"Add 2mls of bacteriostatic or sterile water.",dose:"Both genders: 10 units daily = 250mcg."},
-    {id:"p15",name:"5-Amino-1MQ 50mg",desc:"Blocks NNMT enzyme to boost NAD+ levels and activate fat cell metabolism.",recon:"Add 5ml of bacteriostatic or sterile water.",dose:"Both genders: 2.5-3 units daily = 250-300mcg."},
-    {id:"p16",name:"5-Amino-1MQ 50mg Small",desc:"Blocks NNMT enzyme to boost NAD+ levels and activate fat cell metabolism.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 3 units daily = 500mcg."},
-    {id:"p17",name:"AOD-9604 5mg",desc:"Growth hormone fragment that stimulates fat breakdown without affecting blood sugar.",recon:"Add 0.5ml DMSO directly to vial, stir gently until clear. Add 1.5ML water to the vial. Stir gently.",dose:"Both genders: 10-15 units daily = 250-375mcg."},
-    {id:"p18",name:"SLU-PP-332 5mg",desc:"ERR agonist that mimics the metabolic benefits of exercise at a cellular level.",recon:"Add 0.5ml DMSO directly to vial, stir gently until clear. Add 1.5ml water to the vial. Stir gently.",dose:"Both genders: 10-15 units daily = 250-375mcg."},
-    {id:"p19",name:"Cardarine 300mg",desc:"PPARdelta agonist that enhances fat burning capacity and endurance.",recon:"Contact TDS for reconstitution protocol.",dose:"Contact TDS for dosing guidance."},
-    {id:"p20",name:"Master Shredder 553mg/ml 10ml",desc:"Fat oxidation amino acid blend in liquid form for comprehensive metabolic support.",recon:"Pre-mixed liquid — no reconstitution required.",dose:"Contact TDS for dosing guidance. 0.5ml pre workout."},
-  ]},
-  {id:"s3",title:"CELLULAR ENERGY & DETOX",peptides:[
-    {id:"p21",name:"MOTS-C 10mg",desc:"Mitochondrial-derived peptide that regulates metabolism and improves insulin sensitivity.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Both male and female: 10 units daily = 333mcg."},
-    {id:"p22",name:"SS-31 10mg",desc:"Targets mitochondrial membranes to reduce oxidative stress and improve cellular energy output.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 10-15 units daily = 333-500mcg."},
-    {id:"p23",name:"NAD+ 500mg",desc:"Essential coenzyme involved in cellular energy production, DNA repair, and anti-aging pathways.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 15 units daily = 25mg. OR Take 60 units twice weekly = 200mg."},
-    {id:"p24",name:"NAD+ 1000mg",desc:"Essential coenzyme involved in cellular energy production, DNA repair, and anti-aging pathways.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 7.5 units daily = 25mg. OR Take 30 units twice weekly = 200mg."},
-    {id:"p25",name:"Glutathione 1500mg",desc:"Master antioxidant supporting detoxification, immune function, and skin brightening.",recon:"Add 3mls of bacteriostatic or sterile water.",dose:"Take 20 units, 3 times weekly = 100mg per dose."},
-    {id:"p26",name:"Dickskin 865mg/ml 10ml · Extreme Vasodilator",desc:"Powerful injectable vasodilator stack engineered for maximum circulation enhancement and superior vascular performance.",recon:"Pre-mixed liquid — no reconstitution required.",dose:"Contact TDS for dosing guidance. 0.5ml pre workout."},
-  ]},
-  {id:"s4",title:"HAIR & SKIN REGENERATION",peptides:[
-    {id:"p27",name:"GHK-Cu 50mg",desc:"Copper peptide that stimulates collagen, promotes wound healing, and supports hair follicle regeneration.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Both genders: 10 units daily or before bed = 1.7mg per 10 units."},
-    {id:"p28",name:"GHK-Cu 100mg",desc:"Copper peptide that stimulates collagen, promotes wound healing, and supports hair follicle regeneration.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Both genders: 5 units daily or before bed = 1.7mg per 10 units."},
-    {id:"p29",name:"AHK-Cu 50mg",desc:"Copper peptide with focused action on hair growth stimulation and scalp health.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 10-15 units daily = 1.7mg to 2.5mg daily."},
-    {id:"p30",name:"AHK-Cu 100mg",desc:"Copper peptide with focused action on hair growth stimulation and scalp health.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 5 to 7.5 units daily = 1.7 to 2.5mg daily."},
-    {id:"p31",name:"Snap-8 10mg (Argireline)",desc:"Reduces muscle micro-contractions in facial tissue; topical wrinkle-reducer.",recon:"Add 3ml of sterile water.",dose:"Take 10-15 units nightly = 333-500mcg."},
-    {id:"p32",name:"Matrixyl 10mg",desc:"Stimulates collagen and elastin synthesis; a leading anti-aging and skin repair peptide.",recon:"Add 3ml of sterile water.",dose:"Take 10-15 units nightly = 333-500mcg."},
-  ]},
-  {id:"s5",title:"GROWTH HORMONE OPTIMIZATION",peptides:[
-    {id:"p33",name:"CJC-1295 + DAC 5mg",desc:"Long-acting GHRH analog providing sustained, continuous growth hormone release.",recon:"Add 2ml of bacteriostatic or sterile water.",dose:"Take 10-15 units nightly = 250-375mcg."},
-    {id:"p34",name:"CJC-1295 + Ipamorelin 10mg",desc:"Combined GHRH/ghrelin stack for clean, pulsatile GH stimulation with minimal side effects.",recon:"Add 2mls of sterile water ONLY.",dose:"Take 10-15 units nightly = 250-375mcg of each compound."},
-    {id:"p35",name:"Ipamorelin 10mg",desc:"Selective GH secretagogue with minimal side effects; promotes lean muscle and recovery.",recon:"Add 3mls of bacteriostatic or sterile water.",dose:"Take 7.5-10 units nightly = 250-333mcg."},
-    {id:"p36",name:"Tesamorelin 5mg",desc:"GHRH analog that reduces visceral fat and stimulates natural GH production.",recon:"Add 1ml of sterile water ONLY.",dose:"Take 10 units nightly = 500mcg."},
-    {id:"p37",name:"GHRP-6 5mg",desc:"Growth hormone releasing peptide that stimulates appetite and GH secretion.",recon:"Add 2mls of bacteriostatic or sterile water.",dose:"Take 10-15 units daily = 250-375mcg."},
-    {id:"p38",name:"HGH Somatropin 100 IU Kit",desc:"Synthetic human growth hormone for muscle growth, fat loss, and accelerated recovery.",recon:"Contact TDS for reconstitution protocol.",dose:"Contact TDS for dosing guidance."},
-    {id:"p39",name:"VICER-ACE 12mg Tesamorelin + 6mg Ipamorelin",desc:"Synergistic GH optimization blend for body composition and anti-aging effects.",recon:"Add 3mls of sterile water. Does NOT work well with BAC water.",dose:"Take 8-10 units daily = 335-400mcg Tesamorelin and 165-200mcg Ipamorelin."},
-    {id:"p40",name:"Epithalon",desc:"Telomere-lengthening peptide associated with longevity, anti-aging, and sleep regulation.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 7.5-10 units nightly = 250-333mcg."},
-  ]},
-  {id:"s6",title:"COGNITION · MOOD · SLEEP · LIBIDO",peptides:[
-    {id:"p41",name:"Semax 10mg",desc:"Nootropic peptide that boosts BDNF, sharpens focus, and builds stress resilience.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 7.5 units daily = 250mcg."},
-    {id:"p42",name:"Selank 5mg",desc:"Anxiolytic peptide that reduces anxiety and improves memory recall without sedation.",recon:"Add 2ml of bacteriostatic or sterile water.",dose:"Take 10 units daily = 250mcg."},
-    {id:"p43",name:"Selank 10mg",desc:"Anxiolytic peptide that reduces anxiety and improves memory recall without sedation.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 7.5 units daily = 250mcg."},
-    {id:"p44",name:"COG-TAIL 20mg (Semax + Selank)",desc:"Combined cognitive and mood-balancing stack for focus and calm.",recon:"Add 3mls of bacteriostatic or sterile water.",dose:"Take 7.5 units daily = 250mcg of Semax and Selank."},
-    {id:"p45",name:"Pinealon 10mg",desc:"Pineal gland peptide supporting sleep regulation, neuroprotection, and longevity.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 7.5-10 units daily = 250-333mcg."},
-    {id:"p46",name:"Dihexa 10mg",desc:"Highly potent nootropic promoting synaptogenesis and cognitive repair.",recon:"Add 3ml of sterile water.",dose:"Take 10 units daily = 333mcg."},
-    {id:"p47",name:"Cerebrolysin 60mg",desc:"Neuropeptide complex supporting nerve growth and cognitive function.",recon:"Add 5ml of bacteriostatic or sterile water.",dose:"Take 8-40 units daily = 1mg-5mg daily."},
-    {id:"p48",name:"DSIP 5mg",desc:"Delta Sleep-Inducing Peptide that promotes deep, restorative sleep and reduces stress.",recon:"Add 2ml of bacteriostatic or sterile water.",dose:"Take 6-10 units nightly = 150-250mcg."},
-    {id:"p49",name:"DSIP 10mg",desc:"Delta Sleep-Inducing Peptide that promotes deep, restorative sleep and reduces stress.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 4.5-7.5 units nightly = 150-250mcg."},
-    {id:"p50",name:"Kisspeptin 10mg",desc:"Regulates reproductive hormones; supports libido and testosterone level maintenance.",recon:"Add 3ml of sterile water. Does NOT work well with BAC water.",dose:"Take 5-7.5 units before bed = 175-250mcg."},
-    {id:"p51",name:"PT-141 10mg",desc:"Melanocortin receptor agonist that directly stimulates sexual arousal in both sexes.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 3-5 units nightly = 175-250mcg."},
-    {id:"p52",name:"Melanotan-2 10mg",desc:"Stimulates melanin production for tanning; also carries libido-enhancing properties.",recon:"Add 2ml of bacteriostatic or sterile water.",dose:"Take 3-5 units daily = 175-250mcg."},
-  ]},
-  {id:"s7",title:"IMMUNE FUNCTION & ANTI-MICROBIAL",peptides:[
-    {id:"p53",name:"Thymosin A-1 5mg",desc:"Immune modulator that enhances T-cell activity and antiviral immune response.",recon:"Add 2ml of bacteriostatic or sterile water.",dose:"Take 10 units daily = 250mcg."},
-    {id:"p54",name:"Thymalin 10mg",desc:"Thymus-derived peptide supporting immune regulation and longevity pathways.",recon:"Add 3ml of bacteriostatic or sterile water.",dose:"Take 7.5-10 units daily = 250-333mcg."},
-    {id:"p55",name:"LL-37 5mg",desc:"Antimicrobial peptide with broad-spectrum antibacterial properties and immune-signaling effects.",recon:"Add 2ml of bacteriostatic or sterile water.",dose:"Take 10 units daily = 250mcg."},
-  ]},
-  {id:"s8",title:"RESEARCH SUPPLIES",peptides:[
-    {id:"p56",name:"BAC Water 10ml",desc:"Bacteriostatic water used to safely reconstitute lyophilized peptides for research use.",recon:"Ready to use — no preparation required.",dose:"Use as directed per peptide reconstitution protocol above."},
-    {id:"p57",name:"Sterile Water 3ml",desc:"Single-use sterile water for peptide reconstitution and research applications.",recon:"Ready to use — no preparation required.",dose:"Use as directed per peptide reconstitution protocol above. Single-use only."},
-    {id:"p58",name:"Sterile Water 10ml",desc:"Sterile water for peptide reconstitution and research applications.",recon:"Ready to use — no preparation required.",dose:"Use as directed per peptide reconstitution protocol above."},
-  ]},
-];
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
+function attr(s){return String(s==null?"":s).replace(/"/g,"&quot;");}
+function cssurl(u){return String(u||"").replace(/["'()\\]/g,"");}
+function nm(r){return esc(r.name)+(r.dose?' '+esc(r.dose):'');}
+function ov(r){return r.overview||r.description||'';}
+function toArr(v){return Array.isArray(v)?v:(v&&typeof v==='object'?Object.values(v):[]);}
+function normSections(v){return toArr(v).map(function(s){return Object.assign({},s,{peptides:toArr(s.peptides)});});}
+function normStacks(v){return toArr(v).map(function(st){return Object.assign({},st,{peptides:toArr(st.peptides)});});}
+function levelLabel(l){return LEVELS[(l||'').toLowerCase()]||'';}
+function show(id){document.getElementById(id).classList.add('show');}
+function hide(id){document.getElementById(id).classList.remove('show');}
+function _val(id){var el=document.getElementById(id);return el?(el.value||'').trim():'';}
+function _setV(id,v){var el=document.getElementById(id);if(el)el.value=(v==null?'':v);}
 
-// ── Default stacks (seeded once if /stacks is empty) ─────────────────────────
-const DEFAULT_STACKS = [
-  {id:"st1", ts:1, name:"Recovery & Healing Stack", level:"beginner",
-    desc:"Entry-level healing protocol pairing the two most-used recovery peptides to repair tendons, ligaments, muscle, and gut tissue.",
-    peptides:["BPC-157 5mg","TB-500 5mg"],
-    recon:"Reconstitute each vial separately with 2ml of bacteriostatic or sterile water.",
-    protocol:"BPC-157: 10 units daily = 250mcg. TB-500: 10-15 units daily = 250-375mcg. Inject in the morning.",
-    duration:"4-6 weeks"},
-  {id:"st2", ts:2, name:"Lean Recomp Stack", level:"intermediate",
-    desc:"Metabolic recomposition stack combining a triple-receptor agonist with mitochondrial and visceral-fat support for steady fat loss.",
-    peptides:["Retatrutide 10mg","MOTS-C 10mg","Tesamorelin 5mg"],
-    recon:"Retatrutide: 2ml sterile water. MOTS-C: 3ml BAC or sterile water. Tesamorelin: 1ml sterile water ONLY.",
-    protocol:"Retatrutide: 5-10 units twice weekly = 250-500mcg. MOTS-C: 10 units daily = 333mcg. Tesamorelin: 10 units nightly = 500mcg.",
-    duration:"8-12 weeks"},
-  {id:"st3", ts:3, name:"Longevity & Anti-Aging Stack", level:"advanced",
-    desc:"Comprehensive longevity protocol targeting GH optimization, cellular energy, telomere support, and collagen regeneration.",
-    peptides:["CJC-1295 + Ipamorelin 10mg","NAD+ 500mg","Epithalon","GHK-Cu 50mg"],
-    recon:"Follow each vial's individual reconstitution protocol from the catalog below.",
-    protocol:"CJC/Ipamorelin: 10-15 units nightly = 250-375mcg each. NAD+: 15 units daily = 25mg. Epithalon: 7.5-10 units nightly = 250-333mcg. GHK-Cu: 10 units before bed.",
-    duration:"10-12 weeks (run Epithalon as a 20-day cycle)"},
-];
+/* cache */
+(function(){ try{var c=JSON.parse(localStorage.getItem(LS)||'null'); if(c&&Array.isArray(c.sections)){sections=c.sections;stacks=Array.isArray(c.stacks)?c.stacks:[];}}catch(e){} })();
+function cacheCatalog(){ try{localStorage.setItem(LS,JSON.stringify({sections:sections,stacks:stacks}));}catch(e){} }
+function saveSections(){ cacheCatalog(); db.ref('sections').set(sections); }
+function saveStacks(){ cacheCatalog(); db.ref('stacks').set(stacks); }
 
-const LEVELS = [
-  {id:"beginner", label:"Beginner"},
-  {id:"intermediate", label:"Intermediate"},
-  {id:"advanced", label:"Advanced"},
-];
+db.ref('sections').on('value', function(snap){ var v=snap.val(); if(v===null)return; sections=normSections(v); cacheCatalog(); render(); }, function(e){console.warn(e);render();});
+db.ref('stacks').on('value', function(snap){ var v=snap.val(); if(v===null){stacks=[];} else {stacks=normStacks(v);} cacheCatalog(); render(); }, function(e){console.warn(e);});
 
-// ── State ────────────────────────────────────────────────────────────────────
-let sections = [];
-let stacks = [];
-let seeded = false;
-let seededStacks = false;
-
-function sortSections(arr) {
-  return arr.sort((a, b) => {
-    const ai = DEFAULT_SECTIONS.findIndex(d => d.id === a.id);
-    const bi = DEFAULT_SECTIONS.findIndex(d => d.id === b.id);
-    return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+/* build display records */
+function buildRecs(){
+  recs=[];
+  sections.forEach(function(sec){ (sec.peptides||[]).forEach(function(p){
+    recs.push({ id:p.id, _sid:sec.id, category:sec.title, name:p.name, dose:'', subtitle:p.subtitle||'',
+      image:p.image||'', description:p.desc||'', overview:p.overview||'', mechanism:p.mechanism||'', note:p.note||'',
+      reconstitution:p.recon||'', dosing:p.dose||'', ingredients:Array.isArray(p.components)?p.components:[],
+      researchAreas:Array.isArray(p.areas)?p.areas:[], exclusive:!!p.exclusive,
+      purity:p.purity||'', identity:p.identity||'', form:p.form||'', documentation:p.documentation||'', designation:p.designation||'' });
+  }); });
+  stackRecs = stacks.map(function(st){
+    return { id:st.id, _stack:true, category:'STACKS', name:st.name, dose:'', subtitle:levelLabel(st.level),
+      image:st.image||'', overview:st.desc||'', description:st.desc||'', mechanism:'',
+      note: st.duration?('Suggested cycle: '+st.duration):'', reconstitution:st.recon||'', dosing:st.protocol||'',
+      ingredients:(st.peptides||[]).map(function(n){return {name:n,amount:'',note:''};}), researchAreas:[], exclusive:false,
+      purity:'',identity:'',form:'',documentation:'',designation:'' };
   });
 }
+function findRec(id){ return recs.concat(stackRecs).filter(function(r){return r.id===id;})[0]; }
 
-function parseSections(data) {
-  return sortSections(Object.values(data).map(s => ({
-    ...s,
-    peptides: s.peptides ? Object.values(s.peptides) : []
-  })));
+function missBadge(r){
+  var need=[['image','Photo'],['subtitle','Subtitle'],['overview','Overview'],['mechanism','Mechanism']];
+  var miss=need.filter(function(x){return !(r[x[0]]&&String(r[x[0]]).trim());}).map(function(x){return x[1];});
+  return miss.length?'<div class="miss-badge show">⚠ Missing: '+miss.join(', ')+'</div>':'';
 }
 
-function parseStacks(data) {
-  return Object.values(data).map(st => ({
-    ...st,
-    peptides: st.peptides ? Object.values(st.peptides) : []
-  })).sort((a, b) => (a.ts || 0) - (b.ts || 0));
+function card(r){
+  var thumb=r.image?'<img src="'+cssurl(r.image)+'" alt="'+attr(r.name)+'" loading="lazy">':'<div class="ph">TDS<br>PEPTIDE</div>';
+  var actions = r._stack
+    ? '<div class="card-actions"><button class="btn-mini btn-edit" onclick="event.stopPropagation();openEditStackModal(\''+r.id+'\')">✎ EDIT</button><button class="btn-mini btn-del2" onclick="event.stopPropagation();deleteStack(\''+r.id+'\')">✕ DEL</button></div>'
+    : '<div class="card-actions"><button class="btn-mini btn-edit" onclick="event.stopPropagation();openEditModal(\''+r._sid+'\',\''+r.id+'\')">✎ EDIT</button><button class="btn-mini btn-switch" onclick="event.stopPropagation();switchToStack(\''+r._sid+'\',\''+r.id+'\')">→ STACK</button><button class="btn-mini btn-del2" onclick="event.stopPropagation();deleteCard(\''+r._sid+'\',\''+r.id+'\')">✕ DEL</button></div>';
+  var miss = r._stack?'':missBadge(r);
+  return '<div class="card" onclick="openProfile(\''+r.id+'\')">'+actions+'<div class="crow">'+
+    '<div class="cthumb">'+thumb+'</div>'+
+    '<div class="cmain">'+
+      '<div class="cn">'+nm(r)+(r.exclusive?' <span class="exq">EXCLUSIVE</span>':'')+'</div>'+
+      (r.subtitle?'<div class="csub">'+esc(r.subtitle)+'</div>':'')+
+      (ov(r)?'<div class="cov">'+esc(ov(r))+'</div>':'')+
+      '<div class="cview">VIEW PROFILE →</div>'+miss+
+    '</div></div></div>';
 }
 
-function seedDatabase() {
-  const seedData = {};
-  DEFAULT_SECTIONS.forEach(s => {
-    const peptideMap = {};
-    s.peptides.forEach(p => { peptideMap[p.id] = p; });
-    seedData[s.id] = { id: s.id, title: s.title, peptides: peptideMap };
-  });
-  return db.ref('sections').set(seedData);
-}
+function render(){
+  buildRecs();
+  var groups=[];
+  var exc=recs.filter(function(r){return r.exclusive===true;});
+  if(exc.length) groups.push({title:'EXCLUSIVE',gold:true,items:exc});
+  if(stackRecs.length) groups.push({title:'STACKS',gold:true,items:stackRecs});
+  sections.forEach(function(sec){ groups.push({title:sec.title,gold:false,items:recs.filter(function(r){return r._sid===sec.id;})}); });
 
-function seedStacks() {
-  const seed = {};
-  DEFAULT_STACKS.forEach(st => { seed[st.id] = st; });
-  return db.ref('stacks').set(seed);
-}
+  document.getElementById('nav').innerHTML=groups.map(function(g,i){return '<button class="'+(g.gold?'exc':'')+'" onclick="jump('+i+')">'+esc(g.title)+'</button>';}).join('');
+  document.getElementById('content').innerHTML=groups.map(function(g,i){
+    return '<div class="section" id="sec-'+i+'"><div class="sh"><div class="sbar '+(g.gold?'gold':'')+'"></div><div style="flex:1"><div class="stitle">'+esc(g.title)+'</div><div class="sline '+(g.gold?'gold':'')+'"></div></div></div><div class="grid">'+g.items.map(card).join('')+'</div></div>';
+  }).join('')+'<div class="foot">FOR RESEARCH PURPOSES ONLY · NOT FOR HUMAN CONSUMPTION</div>';
 
-// ── Real-time listeners ───────────────────────────────────────────────────────
-db.ref('sections').on('value', snapshot => {
-  if (!snapshot.exists()) {
-    if (!seeded) {
-      seeded = true;
-      sections = JSON.parse(JSON.stringify(DEFAULT_SECTIONS));
-      render();
-      seedDatabase().catch(e => console.error('Seed error:', e));
-    }
-    return;
-  }
-  sections = parseSections(snapshot.val());
-  cacheCatalog(); render();
-}, error => {
-  console.error('Firebase sections error:', error);
-  if (!sections.length) { sections = JSON.parse(JSON.stringify(DEFAULT_SECTIONS)); render(); }
-});
-
-db.ref('stacks').on('value', snapshot => {
-  if (!snapshot.exists()) {
-    if (!seededStacks) {
-      seededStacks = true;
-      stacks = JSON.parse(JSON.stringify(DEFAULT_STACKS));
-      render();
-      seedStacks().catch(e => console.error('Seed stacks error:', e));
-    }
-    return;
-  }
-  stacks = parseStacks(snapshot.val());
-  cacheCatalog(); render();
-}, error => {
-  console.error('Firebase stacks error:', error);
-  if (!stacks.length) { stacks = JSON.parse(JSON.stringify(DEFAULT_STACKS)); render(); }
-});
-
-// ── Render ───────────────────────────────────────────────────────────────────
-function jumpTo(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const hdr = document.getElementById('hdr');
-  const offset = (hdr ? hdr.offsetHeight : 90) + 20;
-  window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - offset, behavior: 'smooth' });
-}
-
-function render() {
-  renderNav();
   renderAdminBar();
-  renderContent();
   document.body.classList.toggle('admin-mode', isAdmin);
-  const q = document.getElementById('search-input')?.value || '';
-  if (q) handleSearch(q);
+  var q=document.getElementById('search').value||''; if(q) doSearch(q);
 }
 
-function renderNav() {
-  const stacksBtn = `<button class="nav-btn" onclick="jumpTo('sec-stacks')">STACKS</button>`;
-  document.getElementById('nav-bar').innerHTML = stacksBtn + sections.map(s =>
-    `<button class="nav-btn" onclick="jumpTo('sec-${s.id}')">${s.title}</button>`
-  ).join('');
-}
-
-function renderAdminBar() {
+function renderAdminBar(){
   document.getElementById('admin-bar').innerHTML = isAdmin
-    ? `<div class="admin-badge">ADMIN ON</div>
-       <button class="btn-add" onclick="openAddStackModal()">+ ADD STACK</button>
-       <button class="btn-add" onclick="openAddModal()">+ ADD PEPTIDE</button>
-       <button class="btn-signout" onclick="signOut()">SIGN OUT</button>`
-    : `<button class="btn-admin" onclick="openPassModal()">ADMIN</button>`;
+    ? '<button class="abtn red" onclick="openAddModal()">+ PEPTIDE</button><button class="abtn" onclick="openAddStackModal()">+ STACK</button><button class="abtn" onclick="signOut()">EXIT</button>'
+    : '<button class="abtn" onclick="show(\'pass-modal\');setTimeout(function(){document.getElementById(\'pass-input\').focus();},80)">ADMIN</button>';
 }
 
-function renderStacksSection() {
-  const cards = stacks.length
-    ? stacks.map(st => {
-        const lvl = (st.level || '').toLowerCase();
-        const lvlMatch = LEVELS.find(l => l.id === lvl);
-        const badge = lvlMatch ? `<span class="level-badge level-${lvl}">${lvlMatch.label}</span>` : '';
-        const pepList = (st.peptides && st.peptides.length)
-          ? `<ul class="stack-peptides">${st.peptides.map(p => `<li>${p}</li>`).join('')}</ul>`
-          : '<div class="stack-value muted">—</div>';
-        return `
-          <div class="stack-card card">
-            <div class="stack-top">
-              <div class="stack-name">${st.name}</div>
-              ${badge}
-            </div>
-            ${st.desc ? `<div class="stack-desc">${st.desc}</div>` : ''}
-            <div class="stack-block">
-              <div class="stack-label">Included Peptides</div>
-              ${pepList}
-            </div>
-            ${st.recon ? `<div class="stack-block">
-              <div class="stack-label">Reconstitution</div>
-              <div class="stack-value">${st.recon}</div>
-            </div>` : ''}
-            ${st.protocol ? `<div class="stack-block">
-              <div class="stack-label">Protocol / Dosing</div>
-              <div class="stack-value muted">${st.protocol}</div>
-            </div>` : ''}
-            ${st.duration ? `<div class="stack-foot">
-              <div class="stack-label">Cycle</div>
-              <div class="stack-cycle">${st.duration}</div>
-            </div>` : ''}
-            <div class="card-admin-bar">
-              <button class="btn-mini btn-edit" onclick="editStack('${st.id}')">✎ EDIT</button>
-              <button class="btn-mini btn-del2" onclick="deleteStack('${st.id}')">✕ DELETE</button>
-            </div>
-          </div>`;
-      }).join('')
-    : `<div style="color:#555;font-size:14px;letter-spacing:1px;padding:8px 0">No stacks yet. Sign in as admin to add one.</div>`;
+function jump(i){var el=document.getElementById('sec-'+i);if(!el)return;var o=(document.getElementById('hdr').offsetHeight||90)+20;window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-o,behavior:'smooth'});}
+function doSearch(q){q=q.trim().toLowerCase();document.querySelectorAll('.section').forEach(function(sec){var vis=0;sec.querySelectorAll('.card').forEach(function(c){var m=!q||c.innerText.toLowerCase().includes(q);c.style.display=m?'':'none';if(m)vis++;});sec.style.display=(vis===0&&q)?'none':'';});}
 
-  return `
-    <div class="section" id="sec-stacks">
-      <div class="section-hdr">
-        <div class="section-bar"></div>
-        <div style="flex:1">
-          <div class="section-title">STACKS</div>
-          <div class="section-line"></div>
-        </div>
-      </div>
-      <div class="cards-grid">${cards}</div>
-    </div>`;
+/* profile */
+function qrow(k,v){ return v?'<div class="pf-qr"><span class="k">'+k+'</span><span class="v">'+esc(v)+'</span></div>':''; }
+function openProfile(id){
+  var r=findRec(id); if(!r)return;
+  var img=r.image?'<img class="pf-img" src="'+cssurl(r.image)+'" alt="'+attr(r.name)+'">':'<div class="pf-img-ph">no image</div>';
+  var areas=Array.isArray(r.researchAreas)?r.researchAreas.filter(Boolean):[];
+  var chips=areas.length?'<div class="pf-sec"><div class="pf-lbl">Research Focus Areas</div><div class="chips">'+areas.map(function(a){return '<span class="chip">'+esc(a)+'</span>';}).join('')+'</div></div>':'';
+  var mech=r.mechanism?'<div class="pf-sec"><div class="pf-lbl">Mechanism of Action</div><div class="pf-ov">'+esc(r.mechanism)+'</div></div>':'';
+  var body = ov(r)?'<div class="pf-lbl">Overview</div><div class="pf-ov">'+esc(ov(r))+'</div>':'';
+  var note = r.note?'<div class="pf-note">'+esc(r.note)+'</div>':'';
+  var keyinfo = (r.reconstitution||r.dosing)?'<div class="pf-keyinfo">'+
+    (r.reconstitution?'<div><div class="pf-ki-lbl">Reconstitution</div><div class="pf-ki-val">'+esc(r.reconstitution)+'</div></div>':'')+
+    (r.dosing?'<div><div class="pf-ki-lbl">'+(r._stack?'Protocol / Dosing':'Dosing')+'</div><div class="pf-ki-val">'+esc(r.dosing)+'</div></div>':'')+
+  '</div>':'';
+  var comps = (Array.isArray(r.ingredients)&&r.ingredients.length)?'<div class="pf-sec"><div class="pf-lbl">'+(r._stack?'Included Peptides':'Component Breakdown')+'</div><div class="comp-grid">'+r.ingredients.map(function(c){return '<div class="comp"><div class="cdot">◆</div><div class="cnm">'+esc(c.name)+(c.amount?' — '+esc(c.amount):'')+'</div>'+(c.note?'<div class="cnt">'+esc(c.note)+'</div>':'')+'</div>';}).join('')+'</div></div>':'';
+  var qa = r._stack?'':'<div class="pf-sec"><div class="pf-lbl">Quality Assurance</div><div class="qa-grid">'
+    +'<div class="qa"><div class="n">'+esc(r.purity||'≥98%')+'</div><div class="t">Purity</div><div class="d">Confirmed by HPLC prior to release</div></div>'
+    +'<div class="qa"><div class="n">'+esc(r.identity||'MS')+'</div><div class="t">Identity</div><div class="d">Mass-spec confirmed per batch</div></div>'
+    +'<div class="qa"><div class="n">'+esc(r.documentation||'CoA')+'</div><div class="t">Documentation</div><div class="d">Certificate of Analysis on request</div></div>'
+    +'<div class="qa"><div class="n">0</div><div class="t">Medical Claims</div><div class="d">Educational &amp; research context only</div></div>'
+    +'</div></div>';
+  document.getElementById('pf').innerHTML =
+    '<div class="pf-top">'+img+
+      '<div class="pf-info"><button class="pf-close" onclick="closeProfile()">✕</button>'+
+        '<div class="pf-cat">'+(r._stack?'STACK PROFILE':'PEPTIDE PROFILE')+' <b>——</b> '+esc(r.category||'')+'</div>'+
+        '<div class="pf-name">'+esc(r.name)+(r.exclusive?' <span class="exq" style="font-size:12px;vertical-align:middle">EXCLUSIVE</span>':'')+'</div>'+
+        (r.subtitle?'<div class="pf-sub">'+esc(r.subtitle)+'</div>':'')+
+        (r._stack?'':'<div class="pf-qrows">'+qrow('Purity',r.purity)+qrow('Identity',r.identity)+qrow('Form',r.form)+qrow('Documentation',r.documentation)+qrow('Designation',r.designation)+'</div>')+
+      '</div>'+
+    '</div>'+
+    '<div class="pf-body">'+keyinfo+body+note+comps+mech+chips+qa+
+      '<div class="disc">For in vitro research and preclinical laboratory use exclusively. Not for human or veterinary administration. TDS Peptide Research makes no therapeutic, diagnostic, or medical claims regarding any compound in our catalog.</div>'+
+    '</div>';
+  document.getElementById('ov').classList.add('on');
+  document.getElementById('ov').scrollTop=0;
+  document.body.style.overflow='hidden';
 }
+function closeProfile(){ document.getElementById('ov').classList.remove('on'); document.body.style.overflow=''; }
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeProfile();}});
 
-function renderContent() {
-  document.getElementById('content').innerHTML =
-    renderStacksSection() +
-    sections.map(s => `
-      <div class="section" id="sec-${s.id}">
-        <div class="section-hdr">
-          <div class="section-bar"></div>
-          <div style="flex:1">
-            <div class="section-title">${s.title}</div>
-            <div class="section-line"></div>
-          </div>
-        </div>
-        <div class="cards-grid">
-          ${s.peptides.map(p => `
-            <div class="card">
-              <div class="card-name">${p.name}</div>
-              <div class="card-desc">${p.desc}</div>
-              <div class="card-divider">
-                <div class="card-label">RECONSTITUTION</div>
-                <div class="card-recon">${p.recon}</div>
-              </div>
-              <div class="card-dose-wrap">
-                <div class="card-label">DOSING</div>
-                <div class="card-dose">${p.dose}</div>
-              </div>
-              <div class="card-admin-bar">
-                <button class="btn-mini btn-edit" onclick="editPeptide('${s.id}','${p.id}')">✎ EDIT</button>
-                <button class="btn-mini btn-switch" onclick="switchToStack('${s.id}','${p.id}')">→ STACK</button>
-                <button class="btn-mini btn-del2" onclick="deleteCard('${s.id}','${p.id}')">✕ DELETE</button>
-              </div>
-            </div>`).join('')}
-        </div>
-      </div>`).join('') +
-    `<div class="footer">FOR RESEARCH PURPOSES ONLY · NOT FOR HUMAN CONSUMPTION · DM FOR AVAILABILITY</div>`;
-}
+/* admin auth */
+function submitPass(){ if(document.getElementById('pass-input').value===PASS){ isAdmin=true; hide('pass-modal'); render(); } else { document.getElementById('pass-error').style.display='block'; } }
+function signOut(){ isAdmin=false; render(); }
 
-// ── Search ───────────────────────────────────────────────────────────────────
-function handleSearch(query) {
-  const q = query.trim().toLowerCase();
-  const allSections = document.querySelectorAll('.section');
-  let total = 0;
-  allSections.forEach(sec => {
-    const cards = sec.querySelectorAll('.card');
-    let vis = 0;
-    cards.forEach(card => {
-      const match = !q || card.innerText.toLowerCase().includes(q);
-      card.style.display = match ? '' : 'none';
-      if (match) vis++;
-    });
-    sec.style.display = vis === 0 && q ? 'none' : '';
-    total += vis;
-  });
-  let noRes = document.getElementById('no-results');
-  if (!noRes) {
-    noRes = document.createElement('div');
-    noRes.id = 'no-results';
-    noRes.style.cssText = 'text-align:center;color:#555;font-size:14px;padding:60px 20px;letter-spacing:1px;';
-    noRes.textContent = 'No peptides found.';
-    document.getElementById('content').appendChild(noRes);
-  }
-  noRes.style.display = (total === 0 && q) ? 'block' : 'none';
-}
+/* peptide editor */
+function setImgPreview(src){ var im=document.getElementById('af-img-prev'); if(!im)return; if(src){im.src=src;im.style.display='block';} else {im.removeAttribute('src');im.style.display='none';} }
+function pickImg(input){ var f=input.files&&input.files[0]; if(!f)return; var rd=new FileReader(); rd.onload=function(){imgDraft=rd.result;setImgPreview(imgDraft);}; rd.readAsDataURL(f); }
+function setExcl(on){ exclDraft=!!on; var t=document.getElementById('af-excl-toggle'); if(t)t.classList.toggle('on',exclDraft); }
+function toggleExcl(){ setExcl(!exclDraft); }
+function parseComps(t){ return String(t||'').split('\n').map(function(l){return l.trim();}).filter(Boolean).map(function(l){var p=l.split('|').map(function(x){return x.trim();});return {name:p[0]||'',amount:p[1]||'',note:p[2]||''};}).filter(function(c){return c.name;}); }
+function compsToText(cs){ return (cs||[]).map(function(c){return [c.name,c.amount,c.note].join(' | ');}).join('\n'); }
+function parseAreas(t){ return String(t||'').split('\n').map(function(x){return x.trim();}).filter(Boolean); }
 
-// ── Password ─────────────────────────────────────────────────────────────────
-function openPassModal() {
-  document.getElementById('pass-input').value = '';
-  document.getElementById('pass-error').style.display = 'none';
-  document.getElementById('pass-input').classList.remove('pass-input-error');
-  document.getElementById('pass-modal').style.display = 'flex';
-  setTimeout(() => document.getElementById('pass-input').focus(), 100);
+function openAddModal(){
+  editing=null; imgDraft='';
+  document.getElementById('pep-modal-title').textContent='ADD NEW PEPTIDE';
+  document.getElementById('af-sec-wrap').style.display='';
+  document.getElementById('af-sec').innerHTML=sections.map(function(s){return '<option value="'+s.id+'">'+esc(s.title)+'</option>';}).join('');
+  ['af-name','af-sub','af-desc','af-overview','af-mech','af-recon','af-dose','af-image-url','af-comp','af-areas'].forEach(function(id){_setV(id,'');});
+  setExcl(false); setImgPreview(''); show('add-modal'); setTimeout(function(){var n=document.getElementById('af-name');if(n)n.focus();},80);
 }
-function closePassModal() { document.getElementById('pass-modal').style.display = 'none'; }
-function clearPassError() {
-  document.getElementById('pass-error').style.display = 'none';
-  document.getElementById('pass-input').classList.remove('pass-input-error');
+function openEditModal(sid,pid){
+  var sec=sections.filter(function(s){return s.id===sid;})[0]; var p=sec&&(sec.peptides||[]).filter(function(x){return x.id===pid;})[0]; if(!p)return;
+  editing={sid:sid,pid:pid}; imgDraft=p.image||'';
+  document.getElementById('pep-modal-title').textContent='EDIT PEPTIDE';
+  document.getElementById('af-sec-wrap').style.display='none';
+  _setV('af-name',p.name);_setV('af-sub',p.subtitle);_setV('af-desc',p.desc);_setV('af-overview',p.overview);_setV('af-mech',p.mechanism);_setV('af-recon',p.recon);_setV('af-dose',p.dose);
+  _setV('af-image-url',(p.image&&p.image.indexOf('data:')!==0)?p.image:'');
+  _setV('af-comp',compsToText(p.components||[])); _setV('af-areas',(p.areas||[]).join('\n'));
+  setExcl(!!p.exclusive); setImgPreview(imgDraft); show('add-modal');
 }
-function submitPass() {
-  if (document.getElementById('pass-input').value === PASS) {
-    isAdmin = true; closePassModal(); render();
-  } else {
-    document.getElementById('pass-error').style.display = 'block';
-    document.getElementById('pass-input').classList.add('pass-input-error');
-  }
+function closeAddModal(){ hide('add-modal'); }
+function savePeptide(){
+  var name=_val('af-name'); if(!name){alert('Please enter a peptide name.');return;}
+  var urlv=_val('af-image-url');
+  var obj={ name:name, subtitle:_val('af-sub'), exclusive:exclDraft, desc:_val('af-desc'), overview:_val('af-overview'), mechanism:_val('af-mech'),
+    recon:_val('af-recon'), dose:_val('af-dose'), image:imgDraft||urlv||'',
+    components:parseComps(document.getElementById('af-comp').value), areas:parseAreas(document.getElementById('af-areas').value) };
+  if(editing){ var sec=sections.filter(function(s){return s.id===editing.sid;})[0]; var p=sec&&(sec.peptides||[]).filter(function(x){return x.id===editing.pid;})[0]; if(p)Object.assign(p,obj); }
+  else { var sid=document.getElementById('af-sec').value; var sec2=sections.filter(function(s){return s.id===sid;})[0]; if(sec2){sec2.peptides=sec2.peptides||[];sec2.peptides.push(Object.assign({id:'p-'+Date.now()},obj));} }
+  saveSections(); closeAddModal(); render();
 }
-function signOut() { isAdmin = false; render(); }
+function deleteCard(sid,pid){ if(!confirm('Delete this peptide?'))return; var sec=sections.filter(function(s){return s.id===sid;})[0]; if(sec)sec.peptides=(sec.peptides||[]).filter(function(p){return p.id!==pid;}); saveSections(); render(); }
 
-// ── Add / edit / delete peptide (writes directly to Firebase) ────────────────
-let editingPeptide = null;
+/* stacks admin */
+function renderPepChips(){ var list=document.getElementById('sf-pep-list'); if(!stackPepDraft.length){list.innerHTML='<div style="color:#555;font-size:12px">No peptides added yet.</div>';return;} list.innerHTML=stackPepDraft.map(function(p,i){return '<span class="chip">'+esc(p)+'<button type="button" onclick="removePepChip('+i+')">✕</button></span>';}).join(''); }
+function addPepChip(){ var input=document.getElementById('sf-pep-input'); var v=input.value.trim(); if(!v)return; stackPepDraft.push(v); input.value=''; input.focus(); renderPepChips(); }
+function removePepChip(i){ stackPepDraft.splice(i,1); renderPepChips(); }
+function setStackImgPreview(src){ var im=document.getElementById('sf-img-prev'); if(!im)return; if(src){im.src=src;im.style.display='block';}else{im.removeAttribute('src');im.style.display='none';} }
+function pickStackImg(input){ var f=input.files&&input.files[0]; if(!f)return; var rd=new FileReader(); rd.onload=function(){stackImgDraft=rd.result;setStackImgPreview(stackImgDraft);}; rd.readAsDataURL(f); }
+function openAddStackModal(prefill){
+  editingStack=null; stackImgDraft=''; stackPepDraft = prefill?[prefill]:[];
+  ['sf-level','sf-name','sf-desc','sf-recon','sf-protocol','sf-duration','sf-pep-input','sf-image-url'].forEach(function(id){_setV(id,'');});
+  setStackImgPreview(''); document.getElementById('stack-modal-title').textContent='ADD NEW STACK';
+  renderPepChips(); show('add-stack-modal');
+}
+function openEditStackModal(id){
+  var st=stacks.filter(function(s){return s.id===id;})[0]; if(!st)return;
+  editingStack=id; stackImgDraft=st.image||''; stackPepDraft=(st.peptides||[]).slice();
+  _setV('sf-level',st.level||'');_setV('sf-name',st.name||'');_setV('sf-desc',st.desc||'');_setV('sf-recon',st.recon||'');_setV('sf-protocol',st.protocol||'');_setV('sf-duration',st.duration||'');_setV('sf-pep-input','');
+  _setV('sf-image-url',(st.image&&st.image.indexOf('data:')!==0)?st.image:'');
+  setStackImgPreview(stackImgDraft); document.getElementById('stack-modal-title').textContent='EDIT STACK';
+  renderPepChips(); show('add-stack-modal');
+}
+function saveStack(){
+  var name=_val('sf-name'); if(!name){alert('Please enter a stack name.');return;}
+  var urlv=_val('sf-image-url');
+  var obj={ name:name, level:_val('sf-level'), desc:_val('sf-desc'), peptides:stackPepDraft.slice(),
+    recon:_val('sf-recon'), protocol:_val('sf-protocol'), duration:_val('sf-duration'), image:stackImgDraft||urlv||'' };
+  if(editingStack){ var st=stacks.filter(function(s){return s.id===editingStack;})[0]; if(st)Object.assign(st,obj); }
+  else { stacks.push(Object.assign({id:'st-'+Date.now()},obj)); }
+  saveStacks(); hide('add-stack-modal'); render();
+}
+function deleteStack(id){ if(!confirm('Delete this stack?'))return; stacks=stacks.filter(function(s){return s.id!==id;}); saveStacks(); render(); }
+function switchToStack(sid,pid){ var sec=sections.filter(function(s){return s.id===sid;})[0]; var p=sec&&(sec.peptides||[]).filter(function(x){return x.id===pid;})[0]; openAddStackModal(p?p.name:''); }
 
-function openAddModal() {
-  editingPeptide = null;
-  document.getElementById('add-modal-title').textContent = 'ADD NEW PEPTIDE';
-  document.getElementById('add-modal-btn').textContent = 'ADD PEPTIDE';
-  document.getElementById('af-sec').innerHTML = sections.map(s =>
-    `<option value="${s.id}">${s.title}</option>`).join('');
-  ['af-name','af-desc','af-recon','af-dose'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('add-modal').style.display = 'flex';
-  setTimeout(() => document.getElementById('af-name').focus(), 100);
-}
-function editPeptide(sid, pid) {
-  const sec = sections.find(s => s.id === sid); if (!sec) return;
-  const p = (sec.peptides || []).find(x => x.id === pid); if (!p) return;
-  editingPeptide = { sid, pid };
-  document.getElementById('add-modal-title').textContent = 'EDIT PEPTIDE';
-  document.getElementById('add-modal-btn').textContent = 'SAVE CHANGES';
-  document.getElementById('af-sec').innerHTML = sections.map(s =>
-    `<option value="${s.id}">${s.title}</option>`).join('');
-  document.getElementById('af-sec').value = sid;
-  document.getElementById('af-name').value  = p.name  || '';
-  document.getElementById('af-desc').value  = p.desc  || '';
-  document.getElementById('af-recon').value = p.recon || '';
-  document.getElementById('af-dose').value  = p.dose  || '';
-  document.getElementById('add-modal').style.display = 'flex';
-  setTimeout(() => document.getElementById('af-name').focus(), 100);
-}
-function closeAddModal() { editingPeptide = null; document.getElementById('add-modal').style.display = 'none'; }
-function submitAdd() {
-  const sid   = document.getElementById('af-sec').value;
-  const name  = document.getElementById('af-name').value.trim();
-  const desc  = document.getElementById('af-desc').value.trim();
-  const recon = document.getElementById('af-recon').value.trim();
-  const dose  = document.getElementById('af-dose').value.trim();
-  if (!name) { alert('Please enter a peptide name.'); return; }
-
-  if (editingPeptide) {
-    const oldSid = editingPeptide.sid, pid = editingPeptide.pid;
-    const obj = { id: pid, name, desc, recon, dose };
-    if (sid === oldSid) {
-      db.ref(`sections/${sid}/peptides/${pid}`).set(obj)
-        .then(() => { closeAddModal(); })
-        .catch(err => alert('Error saving: ' + err.message));
-    } else {
-      // moved to a different category
-      db.ref(`sections/${sid}/peptides/${pid}`).set(obj)
-        .then(() => db.ref(`sections/${oldSid}/peptides/${pid}`).remove())
-        .then(() => { closeAddModal(); })
-        .catch(err => alert('Error saving: ' + err.message));
-    }
-    return;
-  }
-
-  const newId = 'p-' + Date.now();
-  db.ref(`sections/${sid}/peptides/${newId}`).set({ id: newId, name, desc, recon, dose })
-    .then(() => { closeAddModal(); })
-    .catch(err => alert('Error saving: ' + err.message));
-}
-function deleteCard(sid, pid) {
-  if (!confirm('Delete this peptide?')) return;
-  db.ref(`sections/${sid}/peptides/${pid}`).remove()
-    .catch(err => alert('Error deleting: ' + err.message));
-}
-
-// ── Stacks admin (writes directly to Firebase, same pattern as peptides) ─────
-let stackPepDraft = [];
-
-function renderPepChips() {
-  const list = document.getElementById('sf-pep-list');
-  if (!stackPepDraft.length) {
-    list.innerHTML = '<div class="chip-empty">No peptides added yet.</div>';
-    return;
-  }
-  list.innerHTML = stackPepDraft.map((p, i) =>
-    `<span class="chip">${p}<button type="button" onclick="removePepChip(${i})" aria-label="Remove">✕</button></span>`
-  ).join('');
-}
-function addPepChip() {
-  const input = document.getElementById('sf-pep-input');
-  const val = input.value.trim();
-  if (!val) return;
-  stackPepDraft.push(val);
-  input.value = '';
-  input.focus();
-  renderPepChips();
-}
-function removePepChip(i) { stackPepDraft.splice(i, 1); renderPepChips(); }
-
-let editingStack = null;
-
-function fillStackForm(d) {
-  d = d || {};
-  document.getElementById('sf-level').value    = d.level    || '';
-  document.getElementById('sf-name').value     = d.name     || '';
-  document.getElementById('sf-desc').value     = d.desc     || '';
-  document.getElementById('sf-recon').value    = d.recon    || '';
-  document.getElementById('sf-protocol').value = d.protocol || '';
-  document.getElementById('sf-duration').value = d.duration || '';
-  document.getElementById('sf-pep-input').value = '';
-  stackPepDraft = Array.isArray(d.peptides) ? d.peptides.slice() : [];
-  renderPepChips();
-  document.getElementById('add-stack-modal').style.display = 'flex';
-  setTimeout(() => document.getElementById('sf-name').focus(), 100);
-}
-
-function openAddStackModal(prefill) {
-  editingStack = null;
-  document.getElementById('add-stack-title').textContent = 'ADD NEW STACK';
-  document.getElementById('add-stack-btn').textContent = 'ADD STACK';
-  fillStackForm(prefill);
-}
-function editStack(id) {
-  const st = stacks.find(s => s.id === id); if (!st) return;
-  editingStack = { id: st.id, ts: st.ts || Date.now() };
-  document.getElementById('add-stack-title').textContent = 'EDIT STACK';
-  document.getElementById('add-stack-btn').textContent = 'SAVE CHANGES';
-  fillStackForm(st);
-}
-function closeAddStackModal() { editingStack = null; document.getElementById('add-stack-modal').style.display = 'none'; }
-function submitAddStack() {
-  const name = document.getElementById('sf-name').value.trim();
-  const desc = document.getElementById('sf-desc').value.trim();
-  if (!name) { alert('Please enter a stack name.'); return; }
-  if (!desc) { alert('Please enter a description.'); return; }
-  const id = editingStack ? editingStack.id : 'st-' + Date.now();
-  const ts = editingStack ? editingStack.ts : Date.now();
-  const obj = {
-    id, ts, name,
-    level: document.getElementById('sf-level').value,
-    desc,
-    peptides: stackPepDraft.slice(),
-    recon: document.getElementById('sf-recon').value.trim(),
-    protocol: document.getElementById('sf-protocol').value.trim(),
-    duration: document.getElementById('sf-duration').value.trim(),
-  };
-  db.ref('stacks/' + id).set(obj)
-    .then(() => { closeAddStackModal(); })
-    .catch(err => alert('Error saving: ' + err.message));
-}
-// Open the Add Stack form pre-filled from an existing peptide. The peptide
-// stays in its category; saving creates a new stack under STACKS.
-function switchToStack(sid, pid) {
-  const sec = sections.find(s => s.id === sid);
-  if (!sec) return;
-  const p = (sec.peptides || []).find(x => x.id === pid);
-  if (!p) return;
-  openAddStackModal({
-    name: '', desc: p.desc, recon: p.recon,
-    protocol: p.dose, level: '', duration: '', peptides: [p.name]
-  });
-}
-function deleteStack(id) {
-  if (!confirm('Delete this stack?')) return;
-  db.ref('stacks/' + id).remove()
-    .catch(err => alert('Error deleting: ' + err.message));
-}
-
-// ── Instant render from localStorage cache while Firebase loads ──────────────
-(function loadCacheAndRender(){
-  try {
-    const c = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
-    if (c) {
-      if (Array.isArray(c.sections) && c.sections.length) sections = c.sections;
-      if (Array.isArray(c.stacks)) stacks = c.stacks;
-      if (sections.length) render();
-    }
-  } catch(e){}
-})();
-</script>
-</body>
-</html>
+if(sections.length) render();
+</script></body></html>
