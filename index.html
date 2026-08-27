@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0D0D0D">
 <title>TDS Peptide Research</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Spectral:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -24,6 +24,15 @@ button,input,textarea,select{font-family:inherit;-webkit-appearance:none}
 #admin-bar{display:flex;gap:6px;flex-shrink:0}
 .abtn{background:none;border:1px solid #333;border-radius:6px;color:#aaa;font-size:11px;letter-spacing:1px;padding:8px 11px;min-height:34px;cursor:pointer;white-space:nowrap}
 .abtn.red{background:#E02020;border-color:#E02020;color:#fff;font-weight:700}
+html{overflow-x:hidden;width:100%;max-width:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media(max-width:640px){
+  .hi{padding:0 12px}
+  .ht{flex-direction:column;align-items:stretch;gap:9px;padding:10px 0}
+  .t1{font-size:16px;letter-spacing:1.5px;white-space:normal}
+  .t2{font-size:9px}
+  #admin-bar{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .abtn{padding:10px 2px;font-size:10px;letter-spacing:.4px;text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center}
+}
 .gbtn{border:1px solid #2a5a4a;background:rgba(45,120,90,.16);color:#5cca5c;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.5px;padding:6px 11px;cursor:pointer;white-space:nowrap}
 .gbtn:disabled{opacity:.5}
 .fl-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
@@ -183,7 +192,7 @@ textarea.fi{resize:vertical;min-height:52px;line-height:1.5}
   <div class="modal" style="max-width:440px;background:#161616;border:1px solid #2a2a2a;border-radius:12px;padding:24px">
     <div class="modal-title">AI SETTINGS</div>
     <div class="modal-sub">Paste your Anthropic (Claude) API key to enable ✨ Generate. It's stored only in this browser.</div>
-    <div class="fw2"><div class="fl">API Key</div><input class="fi" id="ai-key" type="password" placeholder="sk-ant-..."></div>
+    <div class="fw2"><div class="fl">API Key</div><input class="fi" id="ai-key" type="password" placeholder="sk-ant-..." autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
     <div class="fw2"><div class="fl">Model <span>(optional)</span></div><input class="fi" id="ai-model" type="text" placeholder="claude-haiku-4-5-20251001"></div>
     <div class="fw2"><div class="fl">Endpoint <span>(advanced — leave blank for Claude)</span></div><input class="fi" id="ai-endpoint" type="text" placeholder="https://api.anthropic.com/v1/messages"></div>
     <div class="brow"><button class="bprim" onclick="saveAI()">SAVE</button><button class="bsec2" onclick="hide('ai-modal')">CLOSE</button></div>
@@ -448,11 +457,11 @@ function submitPass(){ if(document.getElementById('pass-input').value===PASS){ i
 function signOut(){ isAdmin=false; try{localStorage.removeItem('tds_admin');}catch(e){} render(); }
 
 /* ── AI generate ── */
-function aiKey(){ if(aiCfg&&aiCfg.key) return aiCfg.key; try{return localStorage.getItem('tds_ai_key')||'';}catch(e){return '';} }
+function aiKey(){ var k=(aiCfg&&aiCfg.key)||''; if(!k){ try{k=localStorage.getItem('tds_ai_key')||'';}catch(e){} } return (k||'').replace(/\s+/g,''); }
 function aiModel(){ var m=(aiCfg&&aiCfg.model)||''; if(!m){ try{m=localStorage.getItem('tds_ai_model')||'';}catch(e){} } if(!m) m='claude-haiku-4-5-20251001'; if(/claude-3/i.test(m)||/-latest$/i.test(m)){ m=/sonnet|opus/i.test(m)?'claude-sonnet-4-5-20250929':'claude-haiku-4-5-20251001'; } return m; }
 function aiEndpoint(){ if(aiCfg&&aiCfg.endpoint) return aiCfg.endpoint; try{return localStorage.getItem('tds_ai_endpoint')||'https://api.openai.com/v1/chat/completions';}catch(e){return 'https://api.openai.com/v1/chat/completions';} }
 function openAI(){ _setV('ai-key',aiKey()); _setV('ai-model',(aiCfg&&aiCfg.model)||''); _setV('ai-endpoint',(aiCfg&&aiCfg.endpoint)||''); show('ai-modal'); }
-function saveAI(){ var k=_val('ai-key'), m=_val('ai-model'), ep=_val('ai-endpoint'); if(/^sk-ant/i.test(k)){ if(!/^claude/i.test(m)) m=''; if(!/anthropic\.com/.test(ep)) ep=''; } var cfg={key:k,model:m||'',endpoint:ep||''}; try{ localStorage.setItem('tds_ai_key',k); if(m)localStorage.setItem('tds_ai_model',m);else localStorage.removeItem('tds_ai_model'); if(ep)localStorage.setItem('tds_ai_endpoint',ep);else localStorage.removeItem('tds_ai_endpoint'); }catch(e){} aiCfg=cfg; db.ref('config/ai').set(cfg).then(function(){ hide('ai-modal'); }).catch(function(e){ alert('Saved on this device, but could not save to the site database: '+e.message); hide('ai-modal'); }); }
+function saveAI(){ var k=(_val('ai-key')||'').replace(/\s+/g,''), m=(_val('ai-model')||'').trim(), ep=(_val('ai-endpoint')||'').trim(); if(/^sk-ant/i.test(k)){ if(!/^claude/i.test(m)) m=''; if(!/anthropic\.com/.test(ep)) ep=''; } var cfg={key:k,model:m||'',endpoint:ep||''}; try{ localStorage.setItem('tds_ai_key',k); if(m)localStorage.setItem('tds_ai_model',m);else localStorage.removeItem('tds_ai_model'); if(ep)localStorage.setItem('tds_ai_endpoint',ep);else localStorage.removeItem('tds_ai_endpoint'); }catch(e){} aiCfg=cfg; db.ref('config/ai').set(cfg).then(function(){ hide('ai-modal'); }).catch(function(e){ alert('Saved on this device, but could not save to the site database: '+e.message); hide('ai-modal'); }); }
 async function genField(kind, btn){
   var key=aiKey(); if(!key){ alert('Add your API key first (⚙ button).'); openAI(); return; }
   var name=_val('af-name'); if(!name){ alert('Enter the product name first.'); return; }
