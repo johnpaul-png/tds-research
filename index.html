@@ -24,6 +24,10 @@ button,input,textarea,select{font-family:inherit;-webkit-appearance:none}
 #admin-bar{display:flex;gap:6px;flex-shrink:0}
 .abtn{background:none;border:1px solid #333;border-radius:6px;color:#aaa;font-size:11px;letter-spacing:1px;padding:8px 11px;min-height:34px;cursor:pointer;white-space:nowrap}
 .abtn.red{background:#E02020;border-color:#E02020;color:#fff;font-weight:700}
+.gbtn{border:1px solid #2a5a4a;background:rgba(45,120,90,.16);color:#5cca5c;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.5px;padding:6px 11px;cursor:pointer;white-space:nowrap}
+.gbtn:disabled{opacity:.5}
+.fl-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.fl-row .fl{margin-bottom:0}
 .sw{max-width:1050px;margin:0 auto;padding:16px 14px 0}
 .search{width:100%;background:#1C1C1C;border:1px solid #2A2A2A;border-radius:6px;color:#F0F0F0;padding:13px 14px;font-size:16px;outline:none}
 .search:focus{border-color:#444}.search::placeholder{color:#555}
@@ -65,10 +69,8 @@ body.admin-mode .miss-badge.show{display:block}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:200;display:none;overflow-y:auto;padding:28px 18px}
 .ov.on{display:block}
 .pf{position:relative;max-width:920px;margin:0 auto;background:#0D0D0D;border:1px solid #242424;border-radius:18px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.6)}
-.pf-top{display:grid;grid-template-columns:1fr;gap:0}
-@media(min-width:760px){.pf-top{grid-template-columns:420px 1fr}}
-.pf-img{display:block;width:100%;height:auto;max-height:60vh;object-fit:contain;background:#0D0D0D}
-@media(min-width:760px){.pf-img{max-height:80vh}}
+.pf-top{display:block}
+.pf-img{display:block;margin:0 auto;max-width:100%;max-height:62vh;width:auto;height:auto;object-fit:contain;background:#0D0D0D}
 .pf-img-ph{width:100%;min-height:240px;background:#111;display:flex;align-items:center;justify-content:center;color:#444;font-size:12px;letter-spacing:1px}
 .pf-info{padding:26px 22px;position:relative}
 .pf-cat{color:#5bc8c0;font-size:11px;letter-spacing:2px;font-weight:700;text-transform:uppercase;margin-bottom:14px}
@@ -177,6 +179,16 @@ textarea.fi{resize:vertical;min-height:52px;line-height:1.5}
 <div class="ov" id="ov" onclick="if(event.target===this)dismissProfile()"><div class="pf" id="pf"></div></div>
 
 <!-- password modal -->
+<div class="overlay" id="ai-modal" onclick="if(event.target===this)hide('ai-modal')">
+  <div class="modal" style="max-width:440px;background:#161616;border:1px solid #2a2a2a;border-radius:12px;padding:24px">
+    <div class="modal-title">AI SETTINGS</div>
+    <div class="modal-sub">Paste your Anthropic (Claude) API key to enable ✨ Generate. It's stored only in this browser.</div>
+    <div class="fw2"><div class="fl">API Key</div><input class="fi" id="ai-key" type="password" placeholder="sk-ant-..."></div>
+    <div class="fw2"><div class="fl">Model <span>(optional)</span></div><input class="fi" id="ai-model" type="text" placeholder="claude-haiku-4-5-20251001"></div>
+    <div class="fw2"><div class="fl">Endpoint <span>(advanced — leave blank for Claude)</span></div><input class="fi" id="ai-endpoint" type="text" placeholder="https://api.anthropic.com/v1/messages"></div>
+    <div class="brow"><button class="bprim" onclick="saveAI()">SAVE</button><button class="bsec2" onclick="hide('ai-modal')">CLOSE</button></div>
+  </div>
+</div>
 <div class="overlay" id="pass-modal" onclick="if(event.target===this)hide('pass-modal')">
   <div class="modal" style="max-width:340px;text-align:center">
     <div class="modal-title">ADMIN ACCESS</div>
@@ -215,9 +227,9 @@ textarea.fi{resize:vertical;min-height:52px;line-height:1.5}
       </div>
       <div class="pro-group">
         <div class="pro-glabel">Content</div>
-        <div class="fw2"><div class="fl">Description <span>(short)</span></div><textarea class="fi" id="af-desc" rows="2" placeholder="Brief one-liner..."></textarea></div>
-        <div class="fw2"><div class="fl">Overview <span>(long)</span></div><textarea class="fi" id="af-overview" rows="4" placeholder="Full overview..."></textarea></div>
-        <div class="fw2"><div class="fl">Mechanism of Action</div><textarea class="fi" id="af-mech" rows="3" placeholder="How it works..."></textarea></div>
+        <div class="fw2"><div class="fl-row"><div class="fl">Description <span>(short)</span></div><button type="button" class="gbtn" onclick="genField('desc',this)">✨ Generate</button></div><textarea class="fi" id="af-desc" rows="2" placeholder="Brief one-liner..."></textarea></div>
+        <div class="fw2"><div class="fl-row"><div class="fl">Overview <span>(long)</span></div><button type="button" class="gbtn" onclick="genField('overview',this)">✨ Generate</button></div><textarea class="fi" id="af-overview" rows="4" placeholder="Full overview..."></textarea></div>
+        <div class="fw2"><div class="fl-row"><div class="fl">Mechanism of Action</div><button type="button" class="gbtn" onclick="genField('mech',this)">✨ Generate</button></div><textarea class="fi" id="af-mech" rows="3" placeholder="How it works..."></textarea></div>
         <div class="fw2"><div class="fl">Components <span>(one per line: Name | Amount | Note)</span></div><textarea class="fi" id="af-comp" rows="3" placeholder="NAD+ | 100mg | Foundational fuel"></textarea></div>
         <div class="fw2"><div class="fl">Research Areas <span>(one per line)</span></div><textarea class="fi" id="af-areas" rows="3" placeholder="Tissue repair&#10;Wound healing"></textarea></div>
       </div>
@@ -293,8 +305,15 @@ function _setV(id,v){var el=document.getElementById(id);if(el)el.value=(v==null?
 try{ if(localStorage.getItem('tds_admin')==='1') isAdmin=true; }catch(e){}
 function stripImgs(arr){ return (arr||[]).map(function(s){ return {id:s.id,title:s.title,peptides:(s.peptides||[]).map(function(p){ var q={}; for(var k in p){ if(k!=='image') q[k]=p[k]; } return q; })}; }); }
 function stripStackImgs(arr){ return (arr||[]).map(function(st){ var q={}; for(var k in st){ if(k!=='image') q[k]=st[k]; } return q; }); }
-/* cache is image-free so a few photos never bloat localStorage or block the main thread */
-function cacheCatalog(){ try{ localStorage.setItem(LS, JSON.stringify({sections:stripImgs(sections), stacks:stripStackImgs(stacks)})); }catch(e){} }
+/* Cache WITH images when the catalog is a reasonable size (so images paint instantly on reload),
+   but fall back to an image-free cache if it's huge — that keeps localStorage from bloating/freezing. */
+function cacheCatalog(){
+  try{
+    var full = JSON.stringify({sections:sections, stacks:stacks});
+    if(full.length < 3000000){ localStorage.setItem(LS, full); }
+    else { localStorage.setItem(LS, JSON.stringify({sections:stripImgs(sections), stacks:stripStackImgs(stacks)})); }
+  }catch(e){ try{ localStorage.setItem(LS, JSON.stringify({sections:stripImgs(sections), stacks:stripStackImgs(stacks)})); }catch(e2){} }
+}
 var _renderT=null; function scheduleRender(){ if(_renderT)clearTimeout(_renderT); _renderT=setTimeout(function(){ _renderT=null; render(); }, 60); }
 function saveSections(){ cacheCatalog(); return db.ref('sections').set(sections).catch(function(e){ alert('Could not save to the database: '+e.message); }); }
 function saveStacks(){ cacheCatalog(); return db.ref('stacks').set(stacks).catch(function(e){ alert('Could not save to the database: '+e.message); }); }
@@ -371,7 +390,7 @@ function render(){
 
 function renderAdminBar(){
   document.getElementById('admin-bar').innerHTML = isAdmin
-    ? '<button class="abtn red" onclick="openAddModal()">+ PEPTIDE</button><button class="abtn" onclick="openAddStackModal()">+ STACK</button><button class="abtn" onclick="signOut()">EXIT</button>'
+    ? '<button class="abtn red" onclick="openAddModal()">+ PEPTIDE</button><button class="abtn" onclick="openAddStackModal()">+ STACK</button><button class="abtn" onclick="openAI()" title="AI settings">⚙</button><button class="abtn" onclick="signOut()">EXIT</button>'
     : '<button class="abtn" onclick="show(\'pass-modal\');setTimeout(function(){document.getElementById(\'pass-input\').focus();},80)">ADMIN</button>';
 }
 
@@ -424,6 +443,52 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){dismissProf
 /* admin auth */
 function submitPass(){ if(document.getElementById('pass-input').value===PASS){ isAdmin=true; try{localStorage.setItem('tds_admin','1');}catch(e){} hide('pass-modal'); render(); } else { document.getElementById('pass-error').style.display='block'; } }
 function signOut(){ isAdmin=false; try{localStorage.removeItem('tds_admin');}catch(e){} render(); }
+
+/* ── AI generate ── */
+function aiKey(){ try{return localStorage.getItem('tds_ai_key')||'';}catch(e){return '';} }
+function aiModel(){ try{var m=localStorage.getItem('tds_ai_model')||'claude-haiku-4-5-20251001'; if(/claude-3/i.test(m)||/-latest$/i.test(m)){ m=/sonnet|opus/i.test(m)?'claude-sonnet-4-5-20250929':'claude-haiku-4-5-20251001'; } return m;}catch(e){return 'claude-haiku-4-5-20251001';} }
+function aiEndpoint(){ try{return localStorage.getItem('tds_ai_endpoint')||'https://api.openai.com/v1/chat/completions';}catch(e){return 'https://api.openai.com/v1/chat/completions';} }
+function openAI(){ _setV('ai-key',aiKey()); _setV('ai-model',aiModel()); _setV('ai-endpoint', (function(){try{return localStorage.getItem('tds_ai_endpoint')||'';}catch(e){return '';}})()); show('ai-modal'); }
+function saveAI(){ try{ var k=_val('ai-key'); localStorage.setItem('tds_ai_key',k); var m=_val('ai-model'), ep=_val('ai-endpoint'); if(/^sk-ant/i.test(k)){ if(!/^claude/i.test(m)) m=''; if(!/anthropic\.com/.test(ep)) ep=''; } if(m) localStorage.setItem('tds_ai_model',m); else localStorage.removeItem('tds_ai_model'); if(ep) localStorage.setItem('tds_ai_endpoint',ep); else localStorage.removeItem('tds_ai_endpoint'); }catch(e){} hide('ai-modal'); }
+async function genField(kind, btn){
+  var key=aiKey(); if(!key){ alert('Add your API key first (⚙ button).'); openAI(); return; }
+  var name=_val('af-name'); if(!name){ alert('Enter the product name first.'); return; }
+  var map={ desc:'af-desc', overview:'af-overview', mech:'af-mech' };
+  var fid=map[kind]; var hint=document.getElementById(fid).value.trim();
+  var ask={
+    desc:'Write a concise 1-2 sentence research-use description of the product below. Factual, neutral, no medical/dosing advice.',
+    overview:'Write an in-depth, factual research overview (about 150-220 words) of the product below: what it is, its structure or origin, and documented preclinical/clinical research findings. Research context only. Do not invent citations. No medical, dosing, or usage advice.',
+    mech:'Write a factual Mechanism of Action paragraph (about 60-120 words) for the product below, describing the biological pathways/receptors involved. Research context only.'
+  }[kind];
+  var sys='You are a scientific writer for a research-peptide catalog. Be accurate, specific and neutral. Never fabricate citations. Never give medical, dosing, or human-use advice.';
+  var user='Product name: '+name+(hint?('\nExisting notes/context to build on: '+hint):'');
+  var ep=aiEndpoint(), model=aiModel();
+  var anthropic=/^sk-ant/i.test(key)||/anthropic\.com/.test(ep)||/^claude/i.test(model);
+  var url, headers, body, pick;
+  if(anthropic){
+    url=/anthropic\.com/.test(ep)?ep:'https://api.anthropic.com/v1/messages';
+    headers={'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'};
+    body={ model:/^claude/i.test(model)?model:'claude-haiku-4-5-20251001', max_tokens:800, system:sys, messages:[{role:'user',content:ask+'\n\n'+user}] };
+    pick=function(d){ return (d&&d.content&&d.content[0]&&d.content[0].text)||''; };
+  } else {
+    url=ep; headers={'Content-Type':'application/json','Authorization':'Bearer '+key};
+    body={ model:model, temperature:0.4, messages:[{role:'system',content:sys},{role:'user',content:ask+'\n\n'+user}] };
+    pick=function(d){ return (d&&d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content)||''; };
+  }
+  var old=btn.textContent; btn.disabled=true; btn.textContent='…generating';
+  try{
+    var res=await fetch(url,{ method:'POST', headers:headers, body:JSON.stringify(body) });
+    var data=await res.json();
+    if(!res.ok){ throw new Error((data&&data.error&&(data.error.message||data.error))||('HTTP '+res.status)); }
+    var text=(pick(data)||'').trim();
+    if(text){ document.getElementById(fid).value=text; } else { alert('No text returned.'); }
+  }catch(err){
+    var msg=(err&&err.message)||String(err);
+    if(/failed to fetch|networkerror|load failed/i.test(msg)){ msg="Couldn't reach the API. Make sure your Anthropic (Claude) key is correct — it should start with sk-ant- — and that you're online. (OpenAI keys can't be used directly from a website; use your Claude key.)"; }
+    alert('Generate failed: '+msg);
+  }
+  btn.disabled=false; btn.textContent=old;
+}
 
 /* peptide editor */
 function setImgPreview(src){ var im=document.getElementById('af-img-prev'); if(!im)return; if(src){im.src=src;im.style.display='block';} else {im.removeAttribute('src');im.style.display='none';} }
